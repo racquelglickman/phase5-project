@@ -5,6 +5,7 @@ from random import randint, choice as rc
 
 # Remote library imports
 from faker import Faker
+from datetime import date
 
 # Local imports
 from app import app
