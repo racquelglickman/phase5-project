@@ -37,6 +37,17 @@ class Users(Resource):
     
 api.add_resource(Users, '/users')
 
+class UserById(Resource):
+    def get(self, id):
+        user = User.query.filter_by(id=id).first()
+
+        if user:
+            return user.to_dict(), 200
+        else:
+            return {'error': '404: User not found'}, 404
+        
+api.add_resource(UserById, '/users/<int:id>')
+
 class Trips(Resource):
     def get(self):
         return [trip.to_dict() for trip in Trip.query.all()], 200
