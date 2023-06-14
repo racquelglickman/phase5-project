@@ -35,15 +35,18 @@ def make_users():
 def make_trips():
     trips = []
     for i in range(10):
-        first_name = fake.first_name()
+        user_id = rc([user.id for user in users])
+        first_name = [user.first_name for user in users if user.id == user_id][0]
+        # first_name = fake.first_name()
+        location = fake.country()
         length = randint(3,14)
         start_date=fake.date_between(date(2021,1,1), date(2023,6,14))
         trip = Trip(
-            location=fake.country(),
-            name=f'{first_name}\'s Trip',
+            location=location,
+            name=f'{first_name}\'s Trip to {location} {start_date.year}',
             start_date=start_date,
             end_date=start_date + timedelta(days=length),
-            user_id=rc([user.id for user in users]),
+            user_id=user_id,
         )
         trips.append(trip)
 
