@@ -49,3 +49,6 @@ jspm_packages
 
 # pytest cache
 .pytest_cache
+
+server/instance
+server/__pycache__

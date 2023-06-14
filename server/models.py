@@ -18,6 +18,7 @@ class User(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
     activities = db.relationship("Activity", backref="user")
+    trips = db.relationship("Trip", backref="user")
     
     @validates('email')
     def validate_email(self, key, email):
@@ -43,26 +44,22 @@ class Trip(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     location = db.Column(db.String)
     name = db.Column(db.String)
-    description = db.Column(db.String)
     start_date = db.Column(db.String)
     end_date = db.Column(db.String)
-    
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    activities = db.relationship("Activity", backref="trip")
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    days = db.relationship("Day", backref="trip")
 
 
 class Activity(db.Model, SerializerMixin):
     __tablename__ = 'activities'
 
     id = db.Column(db.Integer, primary_key = True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    trip_id = db.Column(db.Integer, db.ForeignKey('trips.id'))
     address = db.Column(db.String)
-    day_id = db.Column(db.Integer, db.ForeignKey('days.id'))
     start_time = db.Column(db.String)
     end_time = db.Column(db.String)
     cost = db.Column(db.Float)
@@ -72,13 +69,19 @@ class Activity(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    day_id = db.Column(db.Integer, db.ForeignKey('days.id'))
+
 
 class Day(db.Model, SerializerMixin):
     __tablename__ = 'days'
 
     id = db.Column(db.Integer, primary_key = True)
     date = db.Column(db.Date)
-    trip_id = trip_id = db.Column(db.Integer, db.ForeignKey('trips.id'))
 
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
+
+    trip_id = db.Column(db.Integer, db.ForeignKey('trips.id'))
+
+    activities = db.relationship("Activity", backref="activity")
