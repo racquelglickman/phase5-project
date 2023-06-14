@@ -17,7 +17,6 @@ class User(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    activities = db.relationship("Activity", backref="user")
     trips = db.relationship("Trip", backref="user")
     
     @validates('email')
@@ -59,6 +58,7 @@ class Activity(db.Model, SerializerMixin):
     __tablename__ = 'activities'
 
     id = db.Column(db.Integer, primary_key = True)
+    name=db.Column(db.String)
     address = db.Column(db.String)
     start_time = db.Column(db.String)
     end_time = db.Column(db.String)
@@ -69,9 +69,9 @@ class Activity(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     day_id = db.Column(db.Integer, db.ForeignKey('days.id'))
 
+    # validate activity category is in category list
 
 class Day(db.Model, SerializerMixin):
     __tablename__ = 'days'
