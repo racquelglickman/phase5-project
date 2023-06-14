@@ -55,7 +55,7 @@ class Trip(db.Model, SerializerMixin):
 
     activities = db.relationship("Activity", backref="trip")
 
-    serialize_rules = ('-activities.trip','-created_at', '-updated_at')
+    serialize_rules = ('-activities.trip','-trips.user','-created_at', '-updated_at','-user.trips.activities')
 
 
 class Activity(db.Model, SerializerMixin):
@@ -75,7 +75,7 @@ class Activity(db.Model, SerializerMixin):
 
     trip_id = db.Column(db.Integer, db.ForeignKey('trips.id'))
 
-    serialize_rules = ('-created_at', '-updated_at')
+    serialize_rules = ('-created_at', '-updated_at','-trip.activities', '-trip.user.trips')
 
     # validate activity category is in category list
 
