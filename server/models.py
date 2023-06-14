@@ -18,6 +18,8 @@ class User(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
     trips = db.relationship("Trip", backref="user")
+
+    serialize_rules = ('-trips.user', '-created_at', '-updated_at')
     
     @validates('email')
     def validate_email(self, key, email):
@@ -51,7 +53,9 @@ class Trip(db.Model, SerializerMixin):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    days = db.relationship("Day", backref="trip")
+    activities = db.relationship("Activity", backref="trip")
+
+    serialize_rules = ('-activities.trip','-created_at', '-updated_at')
 
 
 class Activity(db.Model, SerializerMixin):
@@ -69,19 +73,22 @@ class Activity(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    day_id = db.Column(db.Integer, db.ForeignKey('days.id'))
+    trip_id = db.Column(db.Integer, db.ForeignKey('trips.id'))
+
+    serialize_rules = ('-created_at', '-updated_at')
 
     # validate activity category is in category list
 
-class Day(db.Model, SerializerMixin):
-    __tablename__ = 'days'
 
-    id = db.Column(db.Integer, primary_key = True)
-    date = db.Column(db.Date)
+# class Day(db.Model, SerializerMixin):
+#     __tablename__ = 'days'
 
-    created_at = db.Column(db.DateTime, server_default = db.func.now())
-    updated_at = db.Column(db.DateTime, onupdate = db.func.now())
+#     id = db.Column(db.Integer, primary_key = True)
+#     date = db.Column(db.Date)
 
-    trip_id = db.Column(db.Integer, db.ForeignKey('trips.id'))
+#     created_at = db.Column(db.DateTime, server_default = db.func.now())
+#     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    activities = db.relationship("Activity", backref="activity")
+#     trip_id = db.Column(db.Integer, db.ForeignKey('trips.id'))
+
+#     activities = db.relationship("Activity", backref="activity")

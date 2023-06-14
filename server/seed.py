@@ -9,7 +9,7 @@ from datetime import date, timedelta, time, datetime
 
 # Local imports
 from app import app
-from models import db, User, Trip, Activity, Day
+from models import db, User, Trip, Activity
 
 def make_users():
     users = []
@@ -34,7 +34,7 @@ def make_users():
 
 def make_trips():
     trips = []
-    for i in range(5):
+    for i in range(10):
         first_name = fake.first_name()
         length = randint(3,14)
         start_date=fake.date_between(date(2021,1,1), date(2023,6,14))
@@ -43,7 +43,7 @@ def make_trips():
             name=f'{first_name}\'s Trip',
             start_date=start_date,
             end_date=start_date + timedelta(days=length),
-            user_id=randint(1,10),
+            user_id=rc([user.id for user in users]),
         )
         trips.append(trip)
 
@@ -71,7 +71,7 @@ def make_activities():
             cost = randint(5,200),
             notes = fake.paragraph(nb_sentences=2),
             category = fake.word(),
-            day_id=randint(1,50),
+            trip_id=rc([trip.id for trip in trips]),
         )
         activities.append(activity)
 
@@ -86,47 +86,45 @@ if __name__ == '__main__':
         User.query.delete()
         Trip.query.delete()
         Activity.query.delete()
-        Day.query.delete()
-
-        users = make_users()
-        trips = make_trips()
-        activities = make_activities()
 
         print("Seeding users...")
+        users = make_users()
         db.session.add_all(users)
         db.session.commit()
 
         print("Seeding trips...")
+        trips = make_trips()
         db.session.add_all(trips)
         db.session.commit()
 
         print("Seeding activities...")
+        activities = make_activities()
         db.session.add_all(activities)
         db.session.commit()        
 
-        def make_days():
-            days = []
-            for trip in trips:
-                # print(datetime.strptime(trip.start_date, '%Y-%m-%d').date())
-                start = datetime.strptime(trip.start_date, '%Y-%m-%d').date()
-                end = datetime.strptime(trip.end_date, '%Y-%m-%d').date()
-                num_days = (end - start).days + 1
-                # print(trip.location, start, end, num_days)
-                for i in range(num_days):
-                    day = Day(
-                        date=start,
-                        trip_id=trip.id,
-                    )
-                    days.append(day)
-                    start = start + timedelta(days=1)
+        # def make_days():
+        #     days = []
+        #     for trip in trips:
+        #         # print(datetime.strptime(trip.start_date, '%Y-%m-%d').date())
+        #         start = datetime.strptime(trip.start_date, '%Y-%m-%d').date()
+        #         end = datetime.strptime(trip.end_date, '%Y-%m-%d').date()
+        #         num_days = (end - start).days + 1
+        #         # print(trip.location, start, end, num_days)
+        #         for i in range(num_days):
+        #             day = Day(
+        #                 date=start,
+        #                 trip_id=trip.id,
+        #             )
+        #             days.append(day)
+        #             start = start + timedelta(days=1)
 
-            return days
+        #     return days
         
-        days = make_days()
+        # days = make_days()
 
 
-        print("Seeding days...")
-        db.session.add_all(days)
-        db.session.commit()
+        # print("Seeding days...")
+        # db.session.add_all(days)
+        # db.session.commit()
 
         print("Seeding done.")
