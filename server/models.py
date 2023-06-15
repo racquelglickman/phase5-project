@@ -62,22 +62,31 @@ class Activity(db.Model, SerializerMixin):
     __tablename__ = 'activities'
 
     id = db.Column(db.Integer, primary_key = True)
-    name=db.Column(db.String)
+    name = db.Column(db.String)
     address = db.Column(db.String)
     start_time = db.Column(db.String)
     end_time = db.Column(db.String)
     cost = db.Column(db.Float)
     notes = db.Column(db.String)
-    category = db.Column(db.String)
     
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
     trip_id = db.Column(db.Integer, db.ForeignKey('trips.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
 
     serialize_rules = ('-created_at', '-updated_at','-trip.activities', '-trip.user.trips')
 
-    # validate activity category is in category list
+class Category(db.Model, SerializerMixin):
+    __tablename__ = 'categories'
+
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String)
+    icon = db.Column(db.String)
+
+    activities = db.relationship("Activity", backref='category')
+
+    serialize_rules = ('-activities.category', '-created_at', '-updated_at')
 
 
 # class Day(db.Model, SerializerMixin):

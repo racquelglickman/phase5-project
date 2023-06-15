@@ -9,7 +9,7 @@ from datetime import date, timedelta, time, datetime
 
 # Local imports
 from app import app
-from models import db, User, Trip, Activity
+from models import db, User, Trip, Activity, Category
 
 def make_users():
     users = []
@@ -61,6 +61,16 @@ def make_trips():
 
     return trips
 
+def make_categories():
+    categories =[]
+    for cat in ['flight', 'train', 'car', 'bus', 'tour', 'hike', 'water', 'explore', 'logistics']:
+        category = Category(
+            name = cat,
+        )
+        categories.append(category)
+
+    return categories
+
 def make_activities():
     activities = []
     for i in range(50):
@@ -73,12 +83,15 @@ def make_activities():
             end_time = time(h+length,0,0).isoformat(),
             cost = randint(5,200),
             notes = fake.paragraph(nb_sentences=2),
-            category = fake.word(),
+            category_id = rc([cat.id for cat in categories]),
             trip_id=rc([trip.id for trip in trips]),
         )
         activities.append(activity)
 
     return activities
+
+
+
 
 if __name__ == '__main__':
     fake = Faker()
@@ -89,6 +102,7 @@ if __name__ == '__main__':
         User.query.delete()
         Trip.query.delete()
         Activity.query.delete()
+        Category.query.delete()
 
         print("Seeding users...")
         users = make_users()
@@ -100,10 +114,18 @@ if __name__ == '__main__':
         db.session.add_all(trips)
         db.session.commit()
 
+        print("Seeding categories...")
+        categories = make_categories()        
+        db.session.add_all(categories)
+        db.session.commit()
+
         print("Seeding activities...")
         activities = make_activities()
         db.session.add_all(activities)
-        db.session.commit()        
+        db.session.commit()   
+
+           
+            
 
         # def make_days():
         #     days = []
