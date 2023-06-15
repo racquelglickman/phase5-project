@@ -98,5 +98,11 @@ class Activities(Resource):
     
 api.add_resource(Activities, '/activities')
 
+class Categories(Resource):
+    def get(self):
+        return [cat.to_dict() for cat in Category.query.all()]
+    
+api.add_resource(Categories, '/categories')
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
