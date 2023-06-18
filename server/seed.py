@@ -76,15 +76,19 @@ def make_activities():
     for i in range(50):
         h = randint(8,20)
         length = randint(1,3)
+        trip_id = rc([trip.id for trip in trips])
+        start_date = datetime.strptime([trip.start_date for trip in trips if trip.id == trip_id][0], '%Y-%m-%d').date()
+        end_date = datetime.strptime([trip.end_date for trip in trips if trip.id == trip_id][0], '%Y-%m-%d').date()
         activity = Activity(
             address = fake.address(),
             name = fake.company(),
+            date = fake.date_between(start_date, end_date),
             start_time = time(h,0,0).isoformat(),
             end_time = time(h+length,0,0).isoformat(),
             cost = randint(5,200),
             notes = fake.paragraph(nb_sentences=2),
             category_id = rc([cat.id for cat in categories]),
-            trip_id=rc([trip.id for trip in trips]),
+            trip_id=trip_id,
         )
         activities.append(activity)
 

@@ -64,6 +64,7 @@ class Activity(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String)
     address = db.Column(db.String)
+    date = db.Column(db.String)
     start_time = db.Column(db.String)
     end_time = db.Column(db.String)
     cost = db.Column(db.Float)
