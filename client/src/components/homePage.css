@@ -30,5 +30,5 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: space-evenly;
   }
