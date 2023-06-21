@@ -4,7 +4,7 @@ import React from 'react'
       return (
           <div className='activityCard'>
               <div className='activityTime'>
-                  <p>time</p>
+                  <p>{activity.start_time.substring(0,5)}</p>
               </div>
               <div className='activityIcon'>
                   <p>icon</p>
