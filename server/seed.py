@@ -20,6 +20,7 @@ def make_users():
             first_name = first_name,
             last_name = last_name,
             email=f'{first_name}.{last_name}@email.com',
+            _password_hash = fake.iban()
         )
         users.append(user)
 
@@ -27,6 +28,8 @@ def make_users():
         first_name = 'Racquel',
         last_name = 'Glickman',
         email='racquel.glickman@gmail.com',
+        _password_hash = '$2b$12$YObchz8v3lLS5On9ZE9XzOtIox9BxVZYLGMNgR3EKZXqLgP4hfHBO',
+        # password is 123
     )
     users.append(racquel)
 

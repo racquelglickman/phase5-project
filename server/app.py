@@ -5,6 +5,7 @@
 # Remote library imports
 from flask import request, session, make_response
 from flask_restful import Resource
+from sqlalchemy.exc import IntegrityError
 
 # Local imports
 from config import app, db, api
@@ -73,6 +74,17 @@ class Trips(Resource):
     
 api.add_resource(Trips, '/trips')
 
+class TripById(Resource):
+    def get(self, id):
+        trip = Trip.query.filter_by(id=id).first()
+
+        if trip:
+            return trip.to_dict(), 200
+        else:
+            return {'error': '404: User not found'}, 404
+        
+api.add_resource(TripById, '/trips/<int:id>')
+
 class Activities(Resource):
     def get(self):
         return [activity.to_dict() for activity in Activity.query.all()], 200
@@ -103,6 +115,79 @@ class Categories(Resource):
         return [cat.to_dict() for cat in Category.query.all()]
     
 api.add_resource(Categories, '/categories')
+
+class Signup(Resource):
+
+    def post(self):
+
+        password = request.json['password']
+        
+        user = User(
+            email = request.json['email'],
+            first_name = request.json['first_name'],
+            last_name = request.json['last_name'],
+        )
+        
+        user.password_hash = password
+
+        try:
+
+            db.session.add(user)
+            db.session.commit()
+
+            session['user_id'] = user.id
+
+            return user.to_dict(), 201
+        
+        except IntegrityError:
+
+            return {'error': '422 Unprocessable Entity'}, 422
+        
+class CheckSession(Resource):
+
+    def get(self):
+
+        if session.get('user_id'):
+
+            user = User.query.filter(User.id == session['user_id']).first()
+
+            return user.to_dict(), 200
+        
+        return {'error': '401 Unauthorized'}, 401
+    
+class Login(Resource):
+
+    def post(self):
+
+        email = request.json['email']
+        password = request.json['password']
+
+        user = User.query.filter(User.email == email).first()
+
+        if user:
+            if user.authenticate(password):
+
+                session['user_id'] = user.id
+                return user.to_dict(), 200
+            
+        return {'error': '401 Unauthorized'}, 401
+    
+class Logout(Resource):
+
+    def delete(self):
+
+        if session.get('user_id'):
+
+            session['user_id'] = None
+
+            return {}, 204
+        
+        return {'error': '401 Unauthorized'}, 401
+    
+api.add_resource(Signup, '/signup')
+api.add_resource(CheckSession, '/check_session')
+api.add_resource(Login, '/login')
+api.add_resource(Logout, '/logout')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

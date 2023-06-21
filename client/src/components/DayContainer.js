@@ -1,12 +1,18 @@
 import React from 'react'
+import ActivityCard from './ActivityCard'
 
 function DayContainer({ day, activities }) {
-    console.log(activities)
+
+    const activityCards = activities.map((activity) => {
+        return <ActivityCard activity={activity}/>
+    })
+
     return (
-        <div>
-            <h4>{day}</h4>
-            <p>activities</p>
-            <p>activities</p>
+        <div className='dayContainer'>
+            <div className='dateHeading'>
+                <p>{day}</p>
+            </div>
+            <p>{activityCards}</p>
         </div>
     )
     }

@@ -6,6 +6,7 @@ function ItineraryList() {
     const [activities, setActivities] = useState([])
     const [start, setStart] = useState()
     const [end, setEnd] = useState()
+    const [trip, setTrip] = useState()
 
     useEffect(() => {
         fetch('/trips')
@@ -14,24 +15,22 @@ function ItineraryList() {
                 setStart(data[10]['start_date']+'T00:00:00')
                 setEnd(data[10]['end_date']+'T00:00:00')
                 setActivities(data[10]['activities'])
+                setTrip(data[10])
             })
     }, [])
 
     // turn yyyy-mm-dd into mm-dd-yyyy
     function stringFormat(string) {
         let array = string.split('-')
-        for (let el of array) {
-            if (el.length == 2 && el[0] == 0) {
-                console.log(el)
-                el = el[1]
-                console.log(el)
+        for (let i = 0; i < array.length; i++) {
+
+            if (array[i].length === 2 && array[i][0] === '0') {
+                const newElement = array[i].substring(1)
+                array.splice(i,1,newElement)
             }
         }
-        console.log(array)
         return `${array[1]}-${array[2]}-${array[0]}`
     }
-
-    // UP TO HERE - need to replace array element 
 
     function tripLength(start, end) {
         const date1 = new Date(start)
@@ -48,26 +47,18 @@ function ItineraryList() {
             date1.setDate(date1.getDate() + 1);
 
             dayArray.push(dateStringFormat)
-            console.log(dateStringFormat)
         }
 
         return dayArray
     }
-
-    for (const act of activities) {
-        console.log(act.date)
-        console.log(stringFormat(act.date))
-    }
-
     let x = 0;
     let dayList = tripLength(start,end)
     let length = dayList.length;
     let dayElementArray = []
     for (let i = 0; i < length; i++) {
         const dateActivities = activities.filter((act) => {
-            return stringFormat(act.date) == dayList[i]
+            return stringFormat(act.date) === dayList[i]
         })
-        console.log(dateActivities)
         dayElementArray.push(<DayContainer day={dayList[i]} activities={dateActivities}/>)
     }
 
@@ -76,8 +67,8 @@ function ItineraryList() {
     return (
         <div className='itineraryListContainer'>
             <div className='itineraryListHeader'>
-                <h1>Trip Name goes here</h1>
-                <h2>Trip dates etc.</h2>
+                {/* <h1>{trip.name}</h1>
+                <h2>{stringFormat(trip.start_date)}  -  {stringFormat(trip.end_date)}</h2> */}
             </div>
             {dayElementArray}
         </div>
