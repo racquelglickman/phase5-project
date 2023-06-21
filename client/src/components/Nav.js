@@ -25,11 +25,11 @@ function Nav() {
         <div className="navBar">
             <img />
             <div className="navContent">
-                <h1 className='tagLine'>Nav Bar</h1>
+                <h1 className='tagLine'>Name of app</h1>
                 <div className='links'>
-                  <Link onClick={handleLogout} className="link logoutLink">Logout</Link>
                   <Link to='/mytrips'>My Trips</Link>
-                  <Link to='/'>Home</Link>
+                  <Link onClick={handleLogout} className="link logoutLink">Logout</Link>
+
                 </div>
             </div>
         </div>

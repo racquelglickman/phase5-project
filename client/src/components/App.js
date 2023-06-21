@@ -13,7 +13,7 @@ function App() {
       <MyProvider>
         <Nav/>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/trip" element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='/mytrips' element={<MyTrips />} />
           <Route path='*' element={<Error />} />

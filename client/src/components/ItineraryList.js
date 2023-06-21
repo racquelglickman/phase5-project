@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import DayContainer from './DayContainer'
+import { useLocation } from 'react-router-dom'
+import './homePage.css';
 
-function ItineraryList() {
+function ItineraryList({ tripID }) {
 
     const [activities, setActivities] = useState([])
     const [start, setStart] = useState()
@@ -9,15 +11,17 @@ function ItineraryList() {
     const [trip, setTrip] = useState()
 
     useEffect(() => {
-        fetch('/trips')
+        fetch(`/trips/${tripID}`)
             .then((res) => res.json())
             .then((data) => {
-                setStart(data[10]['start_date']+'T00:00:00')
-                setEnd(data[10]['end_date']+'T00:00:00')
-                setActivities(data[10]['activities'])
-                setTrip(data[10])
+                setTrip(data)
+                setActivities(data['activities'])
+                setStart(data['start_date']+'T00:00:00')
+                setEnd(data['end_date']+'T00:00:00')
             })
     }, [])
+
+    
 
     // turn yyyy-mm-dd into mm-dd-yyyy
     function stringFormat(string) {
@@ -67,8 +71,16 @@ function ItineraryList() {
     return (
         <div className='itineraryListContainer'>
             <div className='itineraryListHeader'>
-                {/* <h1>{trip.name}</h1>
-                <h2>{stringFormat(trip.start_date)}  -  {stringFormat(trip.end_date)}</h2> */}
+                {trip? 
+                <div>
+                    <h1>{trip.name}</h1>
+                    <h2>{stringFormat(trip.start_date)}  -  {stringFormat(trip.end_date)}</h2>
+                </div>
+                : null}
+                <div className='addButton'>
+                    <p>add</p>
+                </div>
+                
             </div>
             {dayElementArray}
         </div>

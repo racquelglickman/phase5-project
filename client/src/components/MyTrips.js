@@ -1,20 +1,21 @@
 import React, { useContext } from 'react'
 import { MyContext } from './MyProvider'
-
+import TripCard from './TripCard'
+import './homePage.css';
 
 function MyTrips() {
 
     const { user } = useContext(MyContext)
-    console.log(user.trips)
 
     const userTrips = user.trips.map((trip) => {
-        return <p>{trip.name}</p>
+        return <TripCard trip={trip}/>
     })
 
     return (
         <div>
-            <div>
-                <p>{userTrips}</p>
+            <h1>My Trips</h1>
+            <div className='tripContainer'>
+                {userTrips}
             </div>
         </div>
     )
