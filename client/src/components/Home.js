@@ -4,6 +4,7 @@ import ItineraryList from './ItineraryList';
 import { MyContext } from './MyProvider'
 import './homePage.css';
 import { useLocation } from 'react-router-dom';
+import Nav from './Nav';
 
 function Home() {
 
@@ -12,19 +13,22 @@ function Home() {
 
     return (
         <div className='homeContainer'>
-            <div className='headerContainer'>
-                <div className='viewSelection'>
+            <div className='mainContainer'>
+                <div className='headerContainer'>
+                    <div className='viewSelection'>
 
+                    </div>
+                </div>
+                <div className='contentContainer'>
+                    <div className='itineraryContainer'>
+                        <ItineraryList tripID={tripID}/>       
+                    </div>
+                    <div className='mapContainer'>
+                        <Map />
+                    </div>
                 </div>
             </div>
-            <div className='contentContainer'>
-                <div className='itineraryContainer'>
-                    <ItineraryList tripID={tripID}/>       
-                </div>
-                <div className='mapContainer'>
-                    Map goes here!
-                </div>
-            </div>
+            
         </div>
     )
 }

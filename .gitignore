@@ -52,3 +52,5 @@ jspm_packages
 
 server/instance
 server/__pycache__
+
+.env

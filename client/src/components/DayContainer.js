@@ -18,6 +18,6 @@ function DayContainer({ day, activities }) {
             <p>{sortedActivityCards}</p>
         </div>
     )
-    }
+}
 
 export default DayContainer

@@ -6,17 +6,21 @@ import Nav from "./Nav";
 import Error from "./Error";
 import Login from "./Login";
 import MyTrips from "./MyTrips";
+import Map from "./Map";
 
 function App() {
   return (
     <div>
       <MyProvider>
-        <Nav/>
+        <div className='navBar'>
+          <Nav />
+        </div>
         <Routes>
           <Route path="/trip" element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='/mytrips' element={<MyTrips />} />
           <Route path='*' element={<Error />} />
+          <Route path='/maps' element={<Map />} />
         </Routes>
       </MyProvider>
     </div>
