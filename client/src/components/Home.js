@@ -16,7 +16,7 @@ function Home() {
             <div className='mainContainer'>
                 <div className='headerContainer'>
                     <div className='viewSelection'>
-
+                        <p>radio button goes here</p>
                     </div>
                 </div>
                 <div className='contentContainer'>
@@ -24,7 +24,7 @@ function Home() {
                         <ItineraryList tripID={tripID}/>       
                     </div>
                     <div className='mapContainer'>
-                        <Map />
+                        <Map tripID={tripID}/>
                     </div>
                 </div>
             </div>

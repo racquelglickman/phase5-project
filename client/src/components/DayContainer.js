@@ -1,10 +1,10 @@
 import React from 'react'
 import ActivityCard from './ActivityCard'
 
-function DayContainer({ day, activities }) {
+function DayContainer({ day, activities, onDeleteActivity }) {
 
     const activityCards = activities.map((activity) => {
-        return <ActivityCard activity={activity}/>
+        return <ActivityCard key={activity.name} activity={activity} onDeleteActivity={onDeleteActivity}/>
     })
 
     // need to turn these time strings into either numbers or date objects to sort them

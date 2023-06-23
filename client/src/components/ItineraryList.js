@@ -21,7 +21,11 @@ function ItineraryList({ tripID }) {
             })
     }, [])
 
-    
+    function onDeleteActivity(deletedID) {
+        setActivities(activities.filter((act) => {
+            return act.id != deletedID;
+        }))
+    }
 
     // turn yyyy-mm-dd into mm-dd-yyyy
     function stringFormat(string) {
@@ -63,7 +67,7 @@ function ItineraryList({ tripID }) {
         const dateActivities = activities.filter((act) => {
             return stringFormat(act.date) === dayList[i]
         })
-        dayElementArray.push(<DayContainer day={dayList[i]} activities={dateActivities}/>)
+        dayElementArray.push(<DayContainer key={dayList[i]} day={dayList[i]} activities={dateActivities} onDeleteActivity={onDeleteActivity}/>)
     }
 
 

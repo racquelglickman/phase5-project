@@ -81,7 +81,7 @@ class TripById(Resource):
         if trip:
             return trip.to_dict(), 200
         else:
-            return {'error': '404: User not found'}, 404
+            return {'error': '404: Trip not found'}, 404
         
 api.add_resource(TripById, '/trips/<int:id>')
 
@@ -109,6 +109,29 @@ class Activities(Resource):
             return {'error': '400: Validation error'}, 400
     
 api.add_resource(Activities, '/activities')
+
+class ActivityById(Resource):
+    def get(self, id):
+        activity = Activity.query.filter_by(id=id).first()
+
+        if activity:
+            return activity.to_dict(), 200
+        else:
+            return {'error': '404: Activity not found'}, 404
+        
+    def delete(self, id):
+        activity = Activity.query.filter_by(id=id).first()
+        if activity:
+            db.session.delete(activity)
+            db.session.commit()
+
+            response = make_response("", 204)
+
+            return response
+
+        return {'error': "Activity not found"}, 404
+        
+api.add_resource(ActivityById, '/activities/<int:id>')
 
 class Categories(Resource):
     def get(self):

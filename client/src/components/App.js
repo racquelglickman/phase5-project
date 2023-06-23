@@ -10,9 +10,9 @@ import Map from "./Map";
 
 function App() {
   return (
-    <div>
+    <div className="appDiv">
       <MyProvider>
-        <div className='navBar'>
+        <div className='navBarContainer'>
           <Nav />
         </div>
         <Routes>
