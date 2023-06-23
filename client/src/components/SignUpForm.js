@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './auth.css'
+import './form.css'
 
 
 function SignUpForm({ onLogin }) {

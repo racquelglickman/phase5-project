@@ -8,7 +8,7 @@ function MyTrips() {
     const { user } = useContext(MyContext)
 
     const userTrips = user.trips.map((trip) => {
-        return <TripCard trip={trip}/>
+        return <TripCard key={trip.name} trip={trip}/>
     })
 
     return (

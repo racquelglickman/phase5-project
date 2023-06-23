@@ -1,30 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import DayContainer from './DayContainer'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import './homePage.css';
 
-function ItineraryList({ tripID }) {
+function ItineraryList({ trip }) {
 
-    const [activities, setActivities] = useState([])
-    const [start, setStart] = useState()
-    const [end, setEnd] = useState()
-    const [trip, setTrip] = useState()
+    const [activities, setActivities] = useState(trip['activities'])
+    const [start, setStart] = useState(trip['start_date']+'T00:00:00')
+    const [end, setEnd] = useState(trip['end_date']+'T00:00:00')
 
-    useEffect(() => {
-        fetch(`/trips/${tripID}`)
-            .then((res) => res.json())
-            .then((data) => {
-                setTrip(data)
-                setActivities(data['activities'])
-                setStart(data['start_date']+'T00:00:00')
-                setEnd(data['end_date']+'T00:00:00')
-            })
-    }, [])
+    const navigate = useNavigate()
 
     function onDeleteActivity(deletedID) {
         setActivities(activities.filter((act) => {
             return act.id != deletedID;
         }))
+    }
+
+    function handleAddActivity() {
+        console.log('adding activity to this trip', trip.name)
+        navigate(`/newactivity`, { state: trip })
     }
 
     // turn yyyy-mm-dd into mm-dd-yyyy
@@ -82,7 +77,7 @@ function ItineraryList({ tripID }) {
                 </div>
                 : null}
                 <div className='addButton'>
-                    <p>add</p>
+                    <button onClick={handleAddActivity}>➕</button>
                 </div>
                 
             </div>

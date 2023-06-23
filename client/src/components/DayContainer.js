@@ -15,7 +15,7 @@ function DayContainer({ day, activities, onDeleteActivity }) {
             <div className='dateHeading'>
                 <p>{day}</p>
             </div>
-            <p>{sortedActivityCards}</p>
+            {sortedActivityCards}
         </div>
     )
 }

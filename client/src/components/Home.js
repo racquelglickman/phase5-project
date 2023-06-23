@@ -10,6 +10,15 @@ function Home() {
 
     const location = useLocation()
     const [tripID, setTripID] = useState(location.state)
+    const [trip, setTrip] = useState()
+
+    useEffect(() => {
+        fetch(`/trips/${tripID}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setTrip(data)
+            })
+    }, [])
 
     return (
         <div className='homeContainer'>
@@ -21,10 +30,10 @@ function Home() {
                 </div>
                 <div className='contentContainer'>
                     <div className='itineraryContainer'>
-                        <ItineraryList tripID={tripID}/>       
+                        {trip? <ItineraryList trip={trip}/> : null}     
                     </div>
                     <div className='mapContainer'>
-                        <Map tripID={tripID}/>
+                        {trip? <Map trip={trip}/> : null}
                     </div>
                 </div>
             </div>
