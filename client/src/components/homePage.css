@@ -7,10 +7,6 @@
   height: 100vh;
 }
 
-.navBarContainer {
-  height: 20%;
-}
-
 .homeContainer {
   display: flex;
   flex-direction: column;
@@ -117,6 +113,8 @@
 .tripCard {
   width: 80vw;
 }
+
+
 
 
 

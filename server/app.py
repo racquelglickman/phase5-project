@@ -92,11 +92,14 @@ class Activities(Resource):
     def post(self):
         try:
             new_activity = Activity(
-                location=request.form['location'],
                 name=request.form['name'],
-                start_date=request.form['start_date'],
-                end_date=request.form['end_date'],
-                user_id=request.form['user_id']
+                address=request.form['address'],
+                date=request.form['date'],
+                start_time=request.form['start_time'],
+                end_time=request.form['end_time'],
+                cost=request.form['cost'],
+                notes=request.form['notes'],
+                trip_id=request.form['trip_id'],
             )
         
             db.session.add(new_activity)
