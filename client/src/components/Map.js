@@ -8,12 +8,7 @@ import uuid from 'react-uuid';
 function Map({ trip }) {
   console.log(trip)
 
-  // const wcc = require('world-countries-capitals')
-  // const capital = wcc.getCountryDetailsByName(trip.location)[0].capital
-
   Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
-
-  // const coordinates = useMemo(() => ({ lat: 18.52043, lng: 73.856743 }), []);
 
   const [center, setCenter] = useState()
   const [coordinates, setCoordinates] = useState([])
@@ -29,25 +24,6 @@ useEffect(() => {
         console.error(error);
       }
     );
-
-    // console.log(trip.activities.length)
-    // for (let i = 0; i < trip.activities.length; i++) {
-    //   console.log(trip.activities[i].address)
-    //   // this is a promise
-    //   console.log(Geocode.fromAddress(trip.activities[i].address))
-    //   Geocode.fromAddress(trip.activities[i].address).then(
-    //     (response) => {
-    //       console.log(response)
-    //       const { lat, lng } = response.results[0].geometry.location;
-    //       console.log(lat, lng)
-    //       setCoordinates([...coordinates, {lat: lat, lng: lng}])
-    //       console.log('next coordinate')
-    //     },
-    //     (error) => {
-    //       console.error(error);
-    //     }
-    //   );
-    // }
 
     const geocodeFunction = async (address) => {
       const response = await Geocode.fromAddress(address)
@@ -71,15 +47,11 @@ useEffect(() => {
 }, [trip]) 
   
 
-  
-
 
   // console.log(coordinates)
   const activityMarkers = coordinates.map((coord) => {
     return <Marker key={uuid()} position={coord}/>
   })
-
-
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
