@@ -3,36 +3,60 @@ import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import './homePage.css'
 import 'world-countries-capitals'
 import Geocode from 'react-geocode'
+import uuid from 'react-uuid';
 
 function Map({ trip }) {
+  console.log(trip)
 
   const wcc = require('world-countries-capitals')
   const capital = wcc.getCountryDetailsByName(trip.location)[0].capital
 
   Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
 
-  const coordinates = useMemo(() => ({ lat: 18.52043, lng: 73.856743 }), []);
+  // const coordinates = useMemo(() => ({ lat: 18.52043, lng: 73.856743 }), []);
 
-  function doSomething(lat, lng) {
-    console.log('these are the coordinates:', lat, lng)
-  }
+  const [center, setCenter] = useState()
+  const [coordinates, setCoordinates] = useState([])
 
-  Geocode.fromAddress(capital).then(
-    (response) => {
-      const { lat, lng } = response.results[0].geometry.location;
-      doSomething(lat, lng)
-      console.log('hi')
-    },
-    (error) => {
-      console.error(error);
+useEffect(() => {
+    Geocode.fromAddress(capital).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        setCenter({lat: lat, lng: lng})
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+
+    console.log(trip.activities.length)
+    for (let i = 0; i < trip.activities.length; i++) {
+      console.log(trip.activities[i].address)
+      Geocode.fromAddress(trip.activities[i].address).then(
+        (response) => {
+          console.log(response)
+          const { lat, lng } = response.results[0].geometry.location;
+          console.log(lat, lng)
+          setCoordinates([...coordinates, {lat: lat, lng: lng}])
+          console.log('next coordinate')
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
     }
-  );
+}, [trip]) 
+  
+
+  
 
 
-  function getCoordinates(place) {
-    console.log('turning address or name of place into coordinates')
+  console.log(coordinates)
+  const activityMarkers = coordinates.map((coord) => {
+    return <Marker key={uuid()} position={coord}/>
+  })
 
-  }
+
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
@@ -44,10 +68,12 @@ function Map({ trip }) {
               null :
               <GoogleMap
                   mapContainerClassName="googleMap"
-                  center={coordinates}
-                  zoom={10}
+                  center={center}
+                  zoom={6}
               >
-                <Marker position={coordinates} />
+                <Marker position={center} />
+                {/* <Marker position={coordinates[0]} /> */}
+                {activityMarkers}
               </GoogleMap>
             }
         </div>

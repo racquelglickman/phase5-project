@@ -21,7 +21,6 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/' element={<MyTrips />} />
           <Route path='*' element={<Error />} />
-          <Route path='/maps' element={<Map />} />
           <Route path='/newactivity' element={<NewActivityForm />}/>
         </Routes>
       </MyProvider>

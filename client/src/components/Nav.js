@@ -26,7 +26,6 @@ function Nav() {
                 <h1 className='tagLine'>Name of app</h1>
                 <div className='links'>
                   <Link className='link' to='/'>My Trips</Link>
-                  <Link className='link' to='/maps'>Map</Link>
                   <Link className="link logoutLink" onClick={handleLogout} >Logout</Link>
                 </div>
             </div>
