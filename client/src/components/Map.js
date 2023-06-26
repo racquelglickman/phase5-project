@@ -49,17 +49,17 @@ useEffect(() => {
     //   );
     // }
 
-    const geocodeFunction = (address) => {
-      Geocode.fromAddress(address)
-      .then((response) => {
-        const { lat, lng } = response.results[0].geometry.location;
-    })}
+    const geocodeFunction = async (address) => {
+      const response = await Geocode.fromAddress(address)
+      const { lat, lng } = response.results[0].geometry.location;
+      console.log(lat, lng)
+      setCoordinates(coordinates => [...coordinates, {lat:lat, lng:lng}])
+  }
 
     const geocodeActivities = async () => {
       for (let i = 0; i < trip.activities.length; i++) {
         console.log(trip.activities[i].address)
-        const resolvedPromise = await geocodeFunction(trip.activities[i].address)
-        console.log(resolvedPromise)
+        await geocodeFunction(trip.activities[i].address)
         console.log('promise is resolved')
       }
       console.log('ALL activities were geocoded')
