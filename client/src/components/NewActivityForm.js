@@ -9,6 +9,7 @@ function NewActivityForm() {
     const [startTime, setStartTime] = useState("")
     const [endTime, setEndTime] = useState("")
     const [cost, setCost] = useState(0)
+    const [category, setCategory] = useState('')
     const [notes, setNotes] = useState("")
 
 
@@ -20,13 +21,22 @@ function NewActivityForm() {
     function handleSubmit(e) {
         e.preventDefault();
         console.log('new activity submitted')
+
         const newActivity = { 
             name: name,
-            image: image,
-            price: parseFloat(price)
-         }
+            address: address,
+            date: date,
+            start_time: startTime,
+            end_time: endTime,
+            cost: parseInt(cost),
+            notes: notes,
+            category_id: parseFloat(category),
+            trip_id: trip.id,
+        }
     
-        fetch(`/activities`, {
+        console.log(newActivity)
+
+        fetch('/activities', {
           method: 'POST',
           headers: {
             'content-type': 'application/json'
@@ -98,6 +108,15 @@ function NewActivityForm() {
                         id="cost"
                         value={cost}
                         onChange={(e) => setCost(e.target.value)}
+                    />
+                    <label className="actLabel"
+                    htmlFor="category">Category</label>
+                    <input
+                        className="actInput"
+                        type="text"
+                        id="category"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
                     />
                     <label className="actLabel activityNotes"
                     htmlFor="notes">Notes</label>

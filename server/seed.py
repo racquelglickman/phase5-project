@@ -62,6 +62,15 @@ def make_trips():
     )
     trips.append(portugal_trip)
 
+    panama_trip = Trip(
+        location = 'Panama',
+        name = 'Panama Trip 2023',
+        start_date = date(2022,8,6),
+        end_date = date(2022,8,15),
+        user_id=11,
+    )
+    trips.append(panama_trip)
+
     return trips
 
 def make_categories():
@@ -94,6 +103,19 @@ def make_activities():
             trip_id=trip_id,
         )
         activities.append(activity)
+
+    pena_palace = Activity(
+        name= 'Pena Palace',
+        address= 'Pena Palace Sintra',
+        date= '2022-03-19',
+        start_time= '9:00',
+        end_time= '15:00',
+        cost= 0,
+        notes= 'some notes',
+        category_id= 1,
+        trip_id= 11,
+    )
+    activities.append(pena_palace)
 
     return activities
 

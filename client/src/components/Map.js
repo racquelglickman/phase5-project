@@ -8,8 +8,8 @@ import uuid from 'react-uuid';
 function Map({ trip }) {
   console.log(trip)
 
-  const wcc = require('world-countries-capitals')
-  const capital = wcc.getCountryDetailsByName(trip.location)[0].capital
+  // const wcc = require('world-countries-capitals')
+  // const capital = wcc.getCountryDetailsByName(trip.location)[0].capital
 
   Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
 
@@ -19,9 +19,10 @@ function Map({ trip }) {
   const [coordinates, setCoordinates] = useState([])
 
 useEffect(() => {
-    Geocode.fromAddress(capital).then(
+    Geocode.fromAddress(trip.location).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
+        console.log(lat, lng)
         setCenter({lat: lat, lng: lng})
       },
       (error) => {
@@ -29,29 +30,51 @@ useEffect(() => {
       }
     );
 
-    console.log(trip.activities.length)
-    for (let i = 0; i < trip.activities.length; i++) {
-      console.log(trip.activities[i].address)
-      Geocode.fromAddress(trip.activities[i].address).then(
-        (response) => {
-          console.log(response)
-          const { lat, lng } = response.results[0].geometry.location;
-          console.log(lat, lng)
-          setCoordinates([...coordinates, {lat: lat, lng: lng}])
-          console.log('next coordinate')
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
+    // console.log(trip.activities.length)
+    // for (let i = 0; i < trip.activities.length; i++) {
+    //   console.log(trip.activities[i].address)
+    //   // this is a promise
+    //   console.log(Geocode.fromAddress(trip.activities[i].address))
+    //   Geocode.fromAddress(trip.activities[i].address).then(
+    //     (response) => {
+    //       console.log(response)
+    //       const { lat, lng } = response.results[0].geometry.location;
+    //       console.log(lat, lng)
+    //       setCoordinates([...coordinates, {lat: lat, lng: lng}])
+    //       console.log('next coordinate')
+    //     },
+    //     (error) => {
+    //       console.error(error);
+    //     }
+    //   );
+    // }
+
+    const geocodeFunction = (address) => {
+      Geocode.fromAddress(address)
+      .then((response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+    })}
+
+    const geocodeActivities = async () => {
+      for (let i = 0; i < trip.activities.length; i++) {
+        console.log(trip.activities[i].address)
+        const resolvedPromise = await geocodeFunction(trip.activities[i].address)
+        console.log(resolvedPromise)
+        console.log('promise is resolved')
+      }
+      console.log('ALL activities were geocoded')
     }
+
+    geocodeActivities()
+
+      
 }, [trip]) 
   
 
   
 
 
-  console.log(coordinates)
+  // console.log(coordinates)
   const activityMarkers = coordinates.map((coord) => {
     return <Marker key={uuid()} position={coord}/>
   })
