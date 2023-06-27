@@ -24,9 +24,9 @@ function Home() {
         <div className='homeContainer'>
             <div className='mainContainer'>
                 <div className='headerContainer'>
-                    <div className='viewSelection'>
+                    {/* <div className='viewSelection'>
                         <p>radio button goes here</p>
-                    </div>
+                    </div> */}
                 </div>
                 <div className='contentContainer'>
                     <div className='itineraryContainer'>

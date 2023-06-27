@@ -8,6 +8,7 @@ import Login from "./Login";
 import MyTrips from "./MyTrips";
 import Map from "./Map";
 import NewActivityForm from "./NewActivityForm";
+import Notebook from "./Notebook";
 
 function App() {
   return (
@@ -17,11 +18,12 @@ function App() {
           <Nav />
         </div>
         <Routes>
-          <Route path="/trips/:id" element={<Home />} />
+          <Route path="/trip/:id" element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='*' element={<Error />} />
           <Route path='/newactivity' element={<NewActivityForm />}/>
           <Route path='/' element={<MyTrips />} />
+          <Route path='/notebook' element={<Notebook />}/>
         </Routes>
       </MyProvider>
     </div>

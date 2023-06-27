@@ -88,3 +88,55 @@
 #loginButton {
     margin-top: 5px
 }
+
+.notebookContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.notebookForm {
+    display: flex;
+    flex-direction: column;
+    width:90%;
+    height: 90%;
+}
+
+
+.tripNotebook {
+    box-shadow: #304c89 1px 1px 10px;
+    border-radius: 8px;
+    background-color: white;
+    width: 100%;
+    margin: 1%;
+}
+
+.notebookButton {
+    background-color: #abddd9;
+    border-radius: 10px;
+    /* box-shadow: rgba(44, 187, 99, 0.10) 0 1px 2px, rgba(44, 187, 99, 0.10) 0 2px 4px, rgba(44, 187, 99, 0.10) 0 4px 8px, rgba(44, 187, 99, 0.10) 0 8px 16px, rgba(44, 187, 99, 0.10) 0 16px 32px; */
+    color: rgb(33, 33, 33);
+    cursor: pointer;
+    display: inline-block;
+    font-family: Optima;
+    padding: 4px 16px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 250ms;
+    border: 0;
+    font-size: 11px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 10%;
+}
+
+.notebookButton:hover {
+    box-shadow: rgba(132, 146, 214, 0.15) 0 1px 2px, rgba(132, 146, 214, 0.15) 0 2px 4px, rgba(132, 146, 214, 0.15) 0 4px 8px, rgba(132, 146, 214, 0.15) 0 8px 16px, rgba(132, 146, 214, 0.15) 0 16px 32px;
+    transform: scale(1.05) rotate(-1deg);
+}
+
+.notebookButtonContainer {
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+}

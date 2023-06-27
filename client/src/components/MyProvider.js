@@ -17,6 +17,8 @@ function MyProvider({ children }) {
         });
     }, []);
 
+    const [selectedTrip, setSelectedTrip] = useState();
+
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
@@ -28,11 +30,10 @@ function MyProvider({ children }) {
     }, [])
 
     if (!user) return <Login onLogin = {setUser}/>;
-    // if (!user) return alert('please log in');
 
     return (
         <MyContext.Provider 
-            value={({user: user, setUser: setUser, categories: categories})}
+            value={({user: user, setUser: setUser, categories: categories, selectedTrip: selectedTrip, setSelectedTrip: setSelectedTrip})}
         >
             {children}
         </MyContext.Provider>

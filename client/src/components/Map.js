@@ -39,7 +39,7 @@ function Map({ trip }) {
           await geocodeFunction(trip.activities[i].address)
           // console.log('promise is resolved')
         }
-        console.log('ALL activities were geocoded')
+        // console.log('ALL activities were geocoded')
       }
 
       geocodeActivities()
