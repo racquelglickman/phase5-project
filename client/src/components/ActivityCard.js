@@ -14,6 +14,10 @@ import React from 'react'
       });
     }
 
+    function handleEdit() {
+        console.log('editing', activity)
+    }
+
     return (
         <div className='activityCard'>
             <div className='activityCardContent'>
@@ -26,10 +30,12 @@ import React from 'react'
                 <div className='activityDetails'>
                         <h4>{activity.name}</h4>
                         <p>{activity.notes}</p>
+                        {/* <p>▿</p> */}
                 </div>
             </div>
-            <div className='activityCardButton'>
-                <button onClick={handleDelete}>🗑</button>
+            <div className='activityCardButtons'>
+                <button className='activityCardButton' onClick={handleEdit}>⠒</button>
+                <button className='activityCardButton' onClick={handleDelete}>🗑</button>
             </div>
             
         </div>

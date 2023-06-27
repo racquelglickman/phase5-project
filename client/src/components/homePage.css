@@ -116,8 +116,13 @@
   padding: 5px;
 }
 
-.activityCardButton {
+.activityCardButtons {
+  display: flex;
   padding: 5px;
+}
+
+.activityCardButton {
+  margin: 1px;
 }
 
 .myTripsContainer {
