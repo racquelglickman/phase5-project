@@ -64,10 +64,21 @@ function ItineraryList({ trip }) {
         const dateActivities = activities.filter((act) => {
             return stringFormat(act.date) === dayList[i]
         })
-        dayElementArray.push(<DayContainer key={dayList[i]} day={dayList[i]} activities={dateActivities} onDeleteActivity={onDeleteActivity}/>)
+        dayElementArray.push(<DayContainer key={dayList[i]} day={dayList[i]} activities={dateActivities} onDeleteActivity={onDeleteActivity} dayStringFormat={dayStringFormat}/>)
     }
 
+    function dayStringFormat(day) {
+        const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+        const dateObject = new Date(day)
+        const dateDay = weekday[dateObject.getDay()]
+        const dateMonth = months[dateObject.getMonth()]
+        const dateDate = dateObject.getDate()
+        return dateDay+', '+dateMonth+' '+dateDate
+    }
+
+    console.log(new Date(trip.start_date).getFullYear())
     
     return (
         <div className='itineraryListContainer'>
@@ -75,7 +86,7 @@ function ItineraryList({ trip }) {
                 {trip? 
                 <div>
                     <h1>{trip.name}</h1>
-                    <h4>{stringFormat(trip.start_date)}  -  {stringFormat(trip.end_date)}</h4>
+                    <p>{dayStringFormat(trip.start_date+'T00:00:00')+', '+(new Date(trip.start_date+'T00:00:00').getFullYear())}  -  {dayStringFormat(trip.end_date+'T00:00:00')+', '+(new Date(trip.end_date+'T00:00:00').getFullYear())}</p>
                 </div>
                 : null}
                 <div className='addButton'>
