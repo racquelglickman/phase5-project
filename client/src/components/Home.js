@@ -9,7 +9,6 @@ import Nav from './Nav';
 function Home() {
 
     const { selectedTrip } = useContext(MyContext)
-    console.log(selectedTrip)
 
     const location = useLocation()
     const [tripID, setTripID] = useState(location.state)

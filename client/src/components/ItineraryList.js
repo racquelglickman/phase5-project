@@ -78,7 +78,9 @@ function ItineraryList({ trip }) {
         return dateDay+', '+dateMonth+' '+dateDate
     }
 
-    console.log(new Date(trip.start_date).getFullYear())
+    function dayStringFormatWithYear(date) {
+        return dayStringFormat(date+'T00:00:00')+', '+(new Date(date+'T00:00:00').getFullYear())
+    }
     
     return (
         <div className='itineraryListContainer'>
@@ -86,7 +88,7 @@ function ItineraryList({ trip }) {
                 {trip? 
                 <div>
                     <h1>{trip.name}</h1>
-                    <p>{dayStringFormat(trip.start_date+'T00:00:00')+', '+(new Date(trip.start_date+'T00:00:00').getFullYear())}  -  {dayStringFormat(trip.end_date+'T00:00:00')+', '+(new Date(trip.end_date+'T00:00:00').getFullYear())}</p>
+                    <p>{dayStringFormatWithYear(trip.start_date)}  -  {dayStringFormatWithYear(trip.end_date)}</p>
                 </div>
                 : null}
                 <div className='addButton'>
