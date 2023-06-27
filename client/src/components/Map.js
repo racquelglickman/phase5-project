@@ -66,7 +66,7 @@ function Map({ trip }) {
                   center={center}
                   zoom={6}
               >
-                <Marker position={center} />
+                {/* <Marker position={center} /> */}
                 {activityMarkers}
               </GoogleMap>
             }

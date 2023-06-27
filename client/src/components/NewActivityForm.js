@@ -17,7 +17,7 @@ function NewActivityForm() {
     const [startTime, setStartTime] = useState("")
     const [endTime, setEndTime] = useState("")
     const [cost, setCost] = useState(0)
-    const [category, setCategory] = useState('')
+    const [category, setCategory] = useState(0)
     const [notes, setNotes] = useState("")
 
     const [isLoading, setIsLoading] = useState(false);
@@ -38,20 +38,18 @@ function NewActivityForm() {
         }
     }
 
-    
-
     const categoryOptions = categoryNames.map((cat) => {
         const capitalizedCat = cat.charAt(0).toUpperCase() + cat.slice(1)
 
         return <option key={cat} value={cat}>{capitalizedCat}</option>
     })
 
-    function tripDates() {
-        console.log('trip dates are the range')
-    }
-
     function handleDateSelection(selectedDate) {
         setDate(selectedDate)
+    }
+
+    function handleTimeSelection(selectedTime) {
+        setStartTime(selectedTime)
     }
     
     function handleSubmit(e) {
@@ -62,7 +60,7 @@ function NewActivityForm() {
             name: name,
             address: address,
             date: date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(),
-            start_time: startTime,
+            start_time: startTime.getHours()+':'+startTime.getMinutes(),
             end_time: endTime,
             cost: parseInt(cost),
             notes: notes,
@@ -121,20 +119,31 @@ function NewActivityForm() {
                         dateFormat="M/d/yyyy"
                         onChange={handleDateSelection} 
                         closeOnScroll={true}
-                        monthsShown={2}
                         includeDateIntervals={[
                             { start: new Date(trip.start_date+'T00:00:00'), end: new Date(trip.end_date+'T00:00:00') },
                           ]}
                     />
                     <label className="actLabel"
                     htmlFor="start_time">Start Time</label>
-                    <input
+                    <DatePicker 
+                        className='actInput'
+                        id='start_time'
+                        selected={startTime}
+                        onChange={handleTimeSelection}
+                        closeOnScroll={true}
+                        showTimeSelect
+                        showTimeSelectOnly
+                        timeIntervals={15}
+                        timeCaption="Time"
+                        dateFormat="h:mm aa"
+                    />
+                    {/* <input
                         className="actInput"
                         type="text"
                         id="start_time"
                         value={startTime}
                         onChange={(e) => setStartTime(e.target.value)}
-                    />
+                    /> */}
                     <label className="actLabel"
                     htmlFor="end_time">End Time</label>
                     <input

@@ -14,6 +14,24 @@ import React from 'react'
       });
     }
 
+    function timeFormat(time) {
+        if (parseInt(time.substring(0,2)) <= 12) {
+            if (time.charAt(0) === '0') {
+                console.log(time.substring(1,5)+' am')
+                return time.substring(1,5)+' am'
+            }
+            else {
+                console.log(time.substring(0,5)+' am')
+                return time.substring(0,5)+' am'
+            }
+        } else {
+            console.log(parseInt(time.substring(0,2))-12+':00 pm')
+            return parseInt(time.substring(0,2))-12+':00 pm'
+        }
+    }
+
+    timeFormat(activity.start_time)
+
     function handleEdit() {
         console.log('editing', activity)
     }
@@ -22,7 +40,7 @@ import React from 'react'
         <div className='activityCard'>
             <div className='activityCardContent'>
                 <div className='activityTime'>
-                    <p>{activity.start_time.substring(0,5)}</p>
+                    <p>{timeFormat(activity.start_time)}</p>
                 </div>
                 <div className='activityIcon'>
                     <p>icon</p>
