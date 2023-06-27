@@ -13,6 +13,7 @@ function Nav() {
         .then((res) => {
           if (res.ok) {
             setUser(null);
+            navigate('/')
           }
       });
     }
@@ -21,9 +22,8 @@ function Nav() {
 
     return (
         <div className="navBar">
-            <img />
             <div className="navContent">
-                <h1 className='tagLine'>Name of app</h1>
+                <img src='planit-logo.png' alt='logo' className='logo'/>
                 <div className='links'>
                   <Link className='link' to='/'>My Trips</Link>
                   <Link className="link logoutLink" onClick={handleLogout} >Logout</Link>

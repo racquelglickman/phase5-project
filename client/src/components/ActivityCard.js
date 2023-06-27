@@ -16,18 +16,20 @@ import React from 'react'
 
     return (
         <div className='activityCard'>
-            <div className='activityTime'>
-                <p>{activity.start_time.substring(0,5)}</p>
+            <div className='activityCardContent'>
+                <div className='activityTime'>
+                    <p>{activity.start_time.substring(0,5)}</p>
+                </div>
+                <div className='activityIcon'>
+                    <p>icon</p>
+                </div>
+                <div className='activityDetails'>
+                        <h4>{activity.name}</h4>
+                        <p>{activity.notes}</p>
+                </div>
             </div>
-            <div className='activityIcon'>
-                <p>icon</p>
-            </div>
-            <div className='activityDetails'>
-                    <h4>{activity.name}</h4>
-                    <p>{activity.notes}</p>
-            </div>
-            <div>
-                    <button onClick={handleDelete}>🗑</button>
+            <div className='activityCardButton'>
+                <button onClick={handleDelete}>🗑</button>
             </div>
             
         </div>

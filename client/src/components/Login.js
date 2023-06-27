@@ -9,7 +9,7 @@ function Login({ onLogin }) {
     return (
       <div className="authContainer">
             <div className="logoContainer">
-                <p>some logo</p>
+                <img src='planit-logo.png' alt='logo' className='logo'/>
             </div>
             {showLogin ? (
             <>

@@ -12,7 +12,7 @@ function MyTrips() {
     })
 
     return (
-        <div>
+        <div className='myTripsContainer'>
             <h1>My Trips</h1>
             <div className='tripContainer'>
                 {userTrips}
