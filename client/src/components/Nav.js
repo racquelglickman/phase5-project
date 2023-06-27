@@ -23,7 +23,7 @@ function Nav() {
     return (
         <div className="navBar">
             <div className="navContent">
-                <img src='planit-logo.png' alt='logo' className='logo'/>
+                <img src='/planit-logo.png' alt='logo' className='logo'/>
                 <div className='links'>
                   <Link className='link' to='/'>My Trips</Link>
                   <Link className="link logoutLink" onClick={handleLogout} >Logout</Link>

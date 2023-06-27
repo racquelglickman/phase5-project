@@ -6,7 +6,7 @@ import Geocode from 'react-geocode'
 import uuid from 'react-uuid';
 
 function Map({ trip }) {
-  console.log(trip)
+  // console.log(trip)
 
   Geocode.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
 
@@ -17,7 +17,7 @@ function Map({ trip }) {
       Geocode.fromAddress(trip.location).then(
         (response) => {
           const { lat, lng } = response.results[0].geometry.location;
-          console.log(lat, lng)
+          // console.log(lat, lng)
           setCenter({lat: lat, lng: lng})
         },
         (error) => {
@@ -27,17 +27,17 @@ function Map({ trip }) {
 
       const geocodeFunction = async (address) => {
         const response = await Geocode.fromAddress(address)
-        console.log(response)
+        // console.log(response)
         const { lat, lng } = response.results[0].geometry.location;
-        console.log(lat, lng)
+        // console.log(lat, lng)
         setCoordinates(coordinates => [...coordinates, {lat:lat, lng:lng}])
     }
 
       const geocodeActivities = async () => {
         for (let i = 0; i < trip.activities.length; i++) {
-          console.log(trip.activities[i].address)
+          // console.log(trip.activities[i].address)
           await geocodeFunction(trip.activities[i].address)
-          console.log('promise is resolved')
+          // console.log('promise is resolved')
         }
         console.log('ALL activities were geocoded')
       }

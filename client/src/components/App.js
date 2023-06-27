@@ -17,11 +17,11 @@ function App() {
           <Nav />
         </div>
         <Routes>
-          <Route path="/trip/:id" element={<Home />} />
+          <Route path="/trips/:id" element={<Home />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/' element={<MyTrips />} />
           <Route path='*' element={<Error />} />
           <Route path='/newactivity' element={<NewActivityForm />}/>
+          <Route path='/' element={<MyTrips />} />
         </Routes>
       </MyProvider>
     </div>

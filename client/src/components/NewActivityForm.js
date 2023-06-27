@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './form.css'
+import { MyContext } from './MyProvider'
+
 
 function NewActivityForm() {
 
@@ -11,7 +13,7 @@ function NewActivityForm() {
 
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
-    const [date, setDate] = useState('');
+    const [date, setDate] = useState(new Date(trip.start_date+'T00:00:00'));
     const [startTime, setStartTime] = useState("")
     const [endTime, setEndTime] = useState("")
     const [cost, setCost] = useState(0)
@@ -22,8 +24,23 @@ function NewActivityForm() {
 
     const navigate = useNavigate()
 
-    const categories = ['flight', 'train', 'car', 'bus', 'tour', 'hike', 'water', 'explore', 'logistics']
-    const categoryOptions = categories.map((cat) => {
+    const { categories } = useContext(MyContext)
+    const categoryNames = []
+    for (let cat of categories) {
+        categoryNames.push(cat.name)
+    }
+
+    function categoryID(catName) {
+        for (let cat of categories) {
+            if (cat.name === category) {
+                return cat.id
+            }
+        }
+    }
+
+    
+
+    const categoryOptions = categoryNames.map((cat) => {
         const capitalizedCat = cat.charAt(0).toUpperCase() + cat.slice(1)
 
         return <option key={cat} value={cat}>{capitalizedCat}</option>
@@ -31,6 +48,10 @@ function NewActivityForm() {
 
     function tripDates() {
         console.log('trip dates are the range')
+    }
+
+    function handleDateSelection(selectedDate) {
+        setDate(selectedDate)
     }
     
     function handleSubmit(e) {
@@ -40,12 +61,12 @@ function NewActivityForm() {
         const newActivity = { 
             name: name,
             address: address,
-            date: date,
+            date: date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(),
             start_time: startTime,
             end_time: endTime,
             cost: parseInt(cost),
             notes: notes,
-            category_id: parseFloat(category),
+            category_id: categoryID(category),
             trip_id: trip.id,
         }
     
@@ -95,11 +116,15 @@ function NewActivityForm() {
                         className="actInput"
                         type="text"
                         id="date"
+                        showIcon
                         selected={date} 
-                        showTimeSelect
-                        filterDate={tripDates}
-                        dateFormat="MMMM d, yyyy h:mm aa"
-                        onChange={(selectedDate) => console.log(selectedDate)} 
+                        dateFormat="M/d/yyyy"
+                        onChange={handleDateSelection} 
+                        closeOnScroll={true}
+                        monthsShown={2}
+                        includeDateIntervals={[
+                            { start: new Date(trip.start_date+'T00:00:00'), end: new Date(trip.end_date+'T00:00:00') },
+                          ]}
                     />
                     <label className="actLabel"
                     htmlFor="start_time">Start Time</label>

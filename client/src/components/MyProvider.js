@@ -17,11 +17,22 @@ function MyProvider({ children }) {
         });
     }, []);
 
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        fetch('/categories')
+            .then((res) => res.json())
+            .then((data) => {
+                setCategories(data)
+            })
+    }, [])
+
     if (!user) return <Login onLogin = {setUser}/>;
+    // if (!user) return alert('please log in');
 
     return (
         <MyContext.Provider 
-            value={({user: user, setUser: setUser})}
+            value={({user: user, setUser: setUser, categories: categories})}
         >
             {children}
         </MyContext.Provider>

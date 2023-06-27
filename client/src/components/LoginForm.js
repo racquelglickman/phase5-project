@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 function LoginForm({ onLogin }) {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
