@@ -33,7 +33,7 @@ function ItineraryList({ trip }) {
         const dayArray = []
         for (let i = 0; i < difDays + 1; i++) {
 
-            const dateStringFormat = stringFormat(`${date1.getFullYear()}-${date1.getMonth()+1}-${date1.getDate()}`)
+            const dateStringFormat = date1.toLocaleDateString('en-us')
 
             date1.setDate(date1.getDate() + 1);
 
@@ -43,7 +43,7 @@ function ItineraryList({ trip }) {
         return dayArray
     }
 
-    // turn yyyy-mm-dd into mm-dd-yyyy
+    // turn yyyy-mm-dd into mm/dd/yyyy
     function stringFormat(string) {
         let array = string.split('-')
         for (let i = 0; i < array.length; i++) {
@@ -75,7 +75,7 @@ function ItineraryList({ trip }) {
                 {trip? 
                 <div>
                     <h1>{trip.name}</h1>
-                    <h2>{stringFormat(trip.start_date)}  -  {stringFormat(trip.end_date)}</h2>
+                    <h4>{stringFormat(trip.start_date)}  -  {stringFormat(trip.end_date)}</h4>
                 </div>
                 : null}
                 <div className='addButton'>
