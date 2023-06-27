@@ -1,23 +1,37 @@
 import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function NewActivityForm() {
 
+    const location = useLocation()
+    const [trip, setTrip] = useState(location.state)
+
     const [name, setName] = useState("");
     const [address, setAddress] = useState("");
-    const [date, setDate] = useState("");
+    const [date, setDate] = useState('');
     const [startTime, setStartTime] = useState("")
     const [endTime, setEndTime] = useState("")
     const [cost, setCost] = useState(0)
     const [category, setCategory] = useState('')
     const [notes, setNotes] = useState("")
 
-
-    const location = useLocation()
-    const [trip, setTrip] = useState(location.state)
-
     const [isLoading, setIsLoading] = useState(false);
 
+    const navigate = useNavigate()
+
+    const categories = ['flight', 'train', 'car', 'bus', 'tour', 'hike', 'water', 'explore', 'logistics']
+    const categoryOptions = categories.map((cat) => {
+        const capitalizedCat = cat.charAt(0).toUpperCase() + cat.slice(1)
+
+        return <option key={cat} value={cat}>{capitalizedCat}</option>
+    })
+
+    function tripDates() {
+        console.log('trip dates are the range')
+    }
+    
     function handleSubmit(e) {
         e.preventDefault();
         console.log('new activity submitted')
@@ -46,7 +60,8 @@ function NewActivityForm() {
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
-            // onAddPlant(data);
+            // onAddActivity(data);
+            navigate(`/trip/${trip.id}`, { state: trip.id })
           })
     }
 
@@ -75,12 +90,15 @@ function NewActivityForm() {
                     />
                     <label className="actLabel"
                     htmlFor="date">Date</label>
-                    <input
+                    <DatePicker 
                         className="actInput"
                         type="text"
                         id="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
+                        selected={date} 
+                        showTimeSelect
+                        filterDate={tripDates}
+                        dateFormat="MMMM d, yyyy h:mm aa"
+                        onChange={(selectedDate) => console.log(selectedDate)} 
                     />
                     <label className="actLabel"
                     htmlFor="start_time">Start Time</label>
@@ -111,13 +129,16 @@ function NewActivityForm() {
                     />
                     <label className="actLabel"
                     htmlFor="category">Category</label>
-                    <input
-                        className="actInput"
+                    <select 
+                        className='actInput'
+                        id='category'
                         type="text"
-                        id="category"
                         value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                    />
+                        onChange={(e) => setCategory(e.target.value)}>
+                        <option>Select</option>
+                        {categoryOptions}
+                    </select>
+
                     <label className="actLabel activityNotes"
                     htmlFor="notes">Notes</label>
                     <input

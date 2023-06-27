@@ -17,7 +17,7 @@ function App() {
           <Nav />
         </div>
         <Routes>
-          <Route path="/trip" element={<Home />} />
+          <Route path="/trip/:id" element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='/' element={<MyTrips />} />
           <Route path='*' element={<Error />} />

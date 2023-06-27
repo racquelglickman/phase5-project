@@ -7,7 +7,7 @@ function TripCard({ trip }) {
     const navigate = useNavigate()
 
     function handleClick() {
-        navigate(`/trip`, {state: trip.id})
+        navigate(`/trip/${trip.id}`, {state: trip.id})
     }
 
     return (

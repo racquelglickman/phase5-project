@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import DayContainer from './DayContainer'
 import { useLocation, useNavigate } from 'react-router-dom'
 import './homePage.css';
+import DayContainer from './DayContainer'
 
 function ItineraryList({ trip }) {
 
@@ -22,22 +22,10 @@ function ItineraryList({ trip }) {
         navigate(`/newactivity`, { state: trip })
     }
 
-    // turn yyyy-mm-dd into mm-dd-yyyy
-    function stringFormat(string) {
-        let array = string.split('-')
-        for (let i = 0; i < array.length; i++) {
-
-            if (array[i].length === 2 && array[i][0] === '0') {
-                const newElement = array[i].substring(1)
-                array.splice(i,1,newElement)
-            }
-        }
-        return `${array[1]}-${array[2]}-${array[0]}`
-    }
-
     function tripLength(start, end) {
         const date1 = new Date(start)
         const date2 = new Date(end)
+
         
         const dif = Math.abs(date2-date1)
         const difDays = dif/(1000 * 3600 * 24)
@@ -54,6 +42,20 @@ function ItineraryList({ trip }) {
 
         return dayArray
     }
+
+    // turn yyyy-mm-dd into mm-dd-yyyy
+    function stringFormat(string) {
+        let array = string.split('-')
+        for (let i = 0; i < array.length; i++) {
+
+            if (array[i].length === 2 && array[i][0] === '0') {
+                const newElement = array[i].substring(1)
+                array.splice(i,1,newElement)
+            }
+        }
+        return `${array[1]}/${array[2]}/${array[0]}`
+    }
+
     let x = 0;
     let dayList = tripLength(start,end)
     let length = dayList.length;

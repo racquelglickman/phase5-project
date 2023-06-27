@@ -123,6 +123,20 @@ class ActivityById(Resource):
         else:
             return {'error': '404: Activity not found'}, 404
         
+    def patch(self, id):
+        activity = Activity.query.filter_by(id=id).first()
+        for attr in request.json:
+            setattr(activity, attr, request.json[attr])
+
+        db.session.add(activity)
+        db.session.commit()
+
+        response = make_response(
+            activity.to_dict(), 202
+        )
+
+        return response
+        
     def delete(self, id):
         activity = Activity.query.filter_by(id=id).first()
         if activity:

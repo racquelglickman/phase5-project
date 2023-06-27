@@ -13,39 +13,39 @@ function Map({ trip }) {
   const [center, setCenter] = useState()
   const [coordinates, setCoordinates] = useState([])
 
-useEffect(() => {
-    Geocode.fromAddress(trip.location).then(
-      (response) => {
+  useEffect(() => {
+      Geocode.fromAddress(trip.location).then(
+        (response) => {
+          const { lat, lng } = response.results[0].geometry.location;
+          console.log(lat, lng)
+          setCenter({lat: lat, lng: lng})
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+
+      const geocodeFunction = async (address) => {
+        const response = await Geocode.fromAddress(address)
+        console.log(response)
         const { lat, lng } = response.results[0].geometry.location;
         console.log(lat, lng)
-        setCenter({lat: lat, lng: lng})
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-
-    const geocodeFunction = async (address) => {
-      const response = await Geocode.fromAddress(address)
-      const { lat, lng } = response.results[0].geometry.location;
-      console.log(lat, lng)
-      setCoordinates(coordinates => [...coordinates, {lat:lat, lng:lng}])
-  }
-
-    const geocodeActivities = async () => {
-      for (let i = 0; i < trip.activities.length; i++) {
-        console.log(trip.activities[i].address)
-        await geocodeFunction(trip.activities[i].address)
-        console.log('promise is resolved')
-      }
-      console.log('ALL activities were geocoded')
+        setCoordinates(coordinates => [...coordinates, {lat:lat, lng:lng}])
     }
 
-    geocodeActivities()
+      const geocodeActivities = async () => {
+        for (let i = 0; i < trip.activities.length; i++) {
+          console.log(trip.activities[i].address)
+          await geocodeFunction(trip.activities[i].address)
+          console.log('promise is resolved')
+        }
+        console.log('ALL activities were geocoded')
+      }
 
-      
-}, [trip]) 
-  
+      geocodeActivities()
+
+        
+  }, [trip]) 
 
 
   // console.log(coordinates)
@@ -67,7 +67,6 @@ useEffect(() => {
                   zoom={6}
               >
                 <Marker position={center} />
-                {/* <Marker position={coordinates[0]} /> */}
                 {activityMarkers}
               </GoogleMap>
             }

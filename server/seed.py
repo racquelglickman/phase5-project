@@ -65,8 +65,8 @@ def make_trips():
     panama_trip = Trip(
         location = 'Panama',
         name = 'Panama Trip 2023',
-        start_date = date(2022,8,6),
-        end_date = date(2022,8,15),
+        start_date = date(2023,8,6),
+        end_date = date(2023,8,15),
         user_id=11,
     )
     trips.append(panama_trip)
