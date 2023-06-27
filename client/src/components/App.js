@@ -23,7 +23,7 @@ function App() {
           <Route path='*' element={<Error />} />
           <Route path='/newactivity' element={<NewActivityForm />}/>
           <Route path='/' element={<MyTrips />} />
-          <Route path='/notebook' element={<Notebook />}/>
+          <Route path='/trip/notebook/:id' element={<Notebook />}/>
         </Routes>
       </MyProvider>
     </div>

@@ -8,12 +8,15 @@ import Nav from './Nav';
 
 function Home() {
 
+    const { selectedTrip } = useContext(MyContext)
+    console.log(selectedTrip)
+
     const location = useLocation()
     const [tripID, setTripID] = useState(location.state)
     const [trip, setTrip] = useState()
 
     useEffect(() => {
-        fetch(`/trips/${tripID}`)
+        fetch(`/trips/${selectedTrip? selectedTrip.id : tripID}`)
             .then((res) => res.json())
             .then((data) => {
                 setTrip(data)

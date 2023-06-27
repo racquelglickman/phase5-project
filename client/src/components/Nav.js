@@ -6,7 +6,7 @@ import { MyContext } from './MyProvider'
 
 function Nav() {
 
-    const { setUser } = useContext(MyContext)
+    const { setUser, selectedTrip, setSelectedTrip } = useContext(MyContext)
 
     function handleLogout() {
       fetch("/logout", { method: "DELETE" })
@@ -22,6 +22,10 @@ function Nav() {
       navigate('/')
     }
 
+    function handleSelectedUser() {
+      setSelectedTrip()
+    }
+
     const navigate = useNavigate()
 
     return (
@@ -29,8 +33,16 @@ function Nav() {
             <div className="navContent">
                 <img src='/planit-logo.png' alt='logo' className='logo' onClick={handleNavigate}/>
                 <div className='links'>
-                  <Link className='link' to='/'>My Trips</Link>
-                  <Link className="link logoutLink" onClick={handleLogout} >Logout</Link>
+                  <div className='navBarCorner'>
+                    <Link className='link myTripsLink' to='/' onClick={handleSelectedUser}>My Trips</Link>
+                    <Link className="link logoutLink" onClick={handleLogout} >Logout</Link>
+                  </div>
+                  {selectedTrip?
+                  <div className='navBarProper'>
+                    <Link className='link' to={selectedTrip? `/trip/${selectedTrip.id}` : null}>Itinerary</Link>
+                    <Link className='link' to={selectedTrip? `/trip/notebook/${selectedTrip.id}` : null}>Notebook</Link>
+                  </div>
+                  : null}
                 </div>
             </div>
         </div>

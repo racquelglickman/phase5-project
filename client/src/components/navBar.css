@@ -38,12 +38,12 @@
     position: absolute;
     top: 25px; 
     right: 60px; 
-    font-size: smaller;
+    font-size: medium;
   }
 
   .myTripsLink {
     position: absolute;
-    top: 45px; 
+    top: 50px; 
     right: 60px; 
-    font-size: smaller;
+    font-size: medium;
   }
