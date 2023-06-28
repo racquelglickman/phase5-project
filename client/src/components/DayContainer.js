@@ -4,8 +4,6 @@ import ActivityCard from './ActivityCard'
 function DayContainer({ day, activities, onDeleteActivity, dayStringFormat }) {
 
     const sortedActivities = activities.sort((a, b) => (parseInt(a.start_time.substring(0,2)) < parseInt(b.start_time.substring(0,2))) ? 1 : -1)
-    console.log(activities)
-    console.log(sortedActivities)
 
     const activityCards = activities.map((activity) => {
         return <ActivityCard key={activity.name} activity={activity} onDeleteActivity={onDeleteActivity} />
