@@ -34,18 +34,18 @@ function Map({ trip }) {
       }
     );
 
-    const geocodeFunction = async (address) => {
-      const response = await Geocode.fromAddress(address)
+    const geocodeFunction = async (activity) => {
+      const response = await Geocode.fromAddress(activity.address)
       console.log(response)
       const { lat, lng } = response.results[0].geometry.location;
       console.log(lat, lng)
-      setCoordinates(coordinates => [...coordinates, {lat:lat, lng:lng}])
+      setCoordinates(coordinates => [...coordinates, {name: activity.name, lat:lat, lng:lng}])
   }
 
     const geocodeActivities = async () => {
       for (let i = 0; i < trip.activities.length; i++) {
         console.log(trip.activities[i].address)
-        await geocodeFunction(trip.activities[i].address)
+        await geocodeFunction(trip.activities[i])
         console.log('promise is resolved')
       }
       console.log('ALL activities were geocoded')
@@ -55,9 +55,9 @@ function Map({ trip }) {
 
   };
 
-  const handleMarkerClick = (id, lat, lng, address) => {
+  const handleMarkerClick = (id, lat, lng, name) => {
     mapRef?.panTo({ lat, lng });
-    setInfoWindowData({ id, address });
+    setInfoWindowData({ id, name });
     setIsOpen(true);
   };
 
