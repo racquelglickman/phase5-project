@@ -10,29 +10,33 @@ function Home() {
     const { selectedTrip, setSelectedTrip } = useContext(MyContext)
 
     const location = useLocation()
-    console.log(location.state)
-    const [tripID, setTripID] = useState(location.state)
+    // console.log(location.state)
+    const [tripID, setTripID] = useState(null)
     const [trip, setTrip] = useState()
     // check what location.state is and then set things appropriately
-    if (typeof(location.state) === 'number') {
-        console.log('this is the trip id')
-        // setTripID(location.state)
-    } else {
-        console.log('this is the selectedTrip object')
-    }
-    
 
     useEffect(() => {
+        if (typeof(location.state) === 'number') {
+            console.log('this is the trip id')
+            setTripID(location.state)
+        } else {
+            console.log('this is the selectedTrip object')
+            setTrip(location.state['selectedTrip'])
+        }
 
-        console.log('selected', selectedTrip)
-        console.log('tripID', tripID)
-        fetch(`/trips/${tripID}`)
-            .then((res) => res.json())
-            .then((data) => {
-                setTrip(data)
-                setSelectedTrip(data)
-            })
     }, [])
+
+    useEffect(() => {
+        if (tripID !== null) {
+        
+            fetch(`/trips/${typeof(location.state) === 'number' ? tripID : location.state['selectedTrip'].id}`)
+                .then((res) => res.json())
+                .then((data) => {
+                    setTrip(data)
+                });
+            }
+        
+    }, [tripID])
 
     return (
         <div className='homeContainer'>
