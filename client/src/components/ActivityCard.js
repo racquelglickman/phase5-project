@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
   function ActivityCard({ activity, onDeleteActivity }) {
 
-    const [editing, setEditing] = useState(false)
     const [editNotesValue, setEditNotesValue] = useState(activity.notes);
+
+    const navigate = useNavigate()
 
     function handleDelete() {
         console.log('deleting activity')
@@ -32,7 +34,7 @@ import React, { useState } from 'react'
 
     function handleEdit() {
         console.log('editing', activity)
-        setEditing(true)
+        navigate(`/editactivity`, { state: activity })
     }
 
     return (
@@ -41,9 +43,9 @@ import React, { useState } from 'react'
                 <div className='activityTime'>
                     <p>{timeFormat(activity.start_time)}</p>
                 </div>
-                <div className='activityIcon'>
+                {/* <div className='activityIcon'>
                     <p>icon</p>
-                </div>
+                </div> */}
                 <div className='activityDetails'>
                         <h4>{activity.name}</h4>
                         <p>{activity.notes}</p> 

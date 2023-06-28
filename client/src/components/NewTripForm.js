@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom';
 
 function NewTripForm() {
-  const [name, setName] = useState("");
+    const [name, setName] = useState("");
     const [destination, setDestination] = useState("");
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("")
@@ -63,6 +63,6 @@ function NewTripForm() {
                 </div>
         </form>
     )
-    }
+}
 
 export default NewTripForm

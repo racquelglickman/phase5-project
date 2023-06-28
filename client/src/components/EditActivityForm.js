@@ -6,25 +6,29 @@ import './form.css'
 import { MyContext } from './MyProvider'
 
 
-function NewActivityForm() {
+function EditActivityForm() {
+
+    const { categories, selectedTrip } = useContext(MyContext)
 
     const location = useLocation()
-    const [trip, setTrip] = useState(location.state)
+    const [activity, setActivity] = useState(location.state)
+    console.log(activity)
+    console.log(selectedTrip)
 
-    const [name, setName] = useState("");
-    const [address, setAddress] = useState("");
-    const [date, setDate] = useState(new Date(trip.start_date+'T00:00:00'));
-    const [startTime, setStartTime] = useState("")
+
+    const [name, setName] = useState(activity.name);
+    const [address, setAddress] = useState(activity.address);
+    const [date, setDate] = useState(new Date(activity.date+'T00:00:00'));
+    const [startTime, setStartTime] = useState('')
     const [endTime, setEndTime] = useState("")
-    const [cost, setCost] = useState(0)
-    const [category, setCategory] = useState(0)
-    const [notes, setNotes] = useState("")
+    const [cost, setCost] = useState(activity.cost)
+    const [category, setCategory] = useState(activity.cost)
+    const [notes, setNotes] = useState(activity.notes)
 
     const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate()
 
-    const { categories } = useContext(MyContext)
     const categoryNames = []
     for (let cat of categories) {
         categoryNames.push(cat.name)
@@ -49,39 +53,44 @@ function NewActivityForm() {
     }
 
     function handleTimeSelection(selectedTime) {
+        console.log(selectedTime)
+        console.log(selectedTime.getHours(), selectedTime.getMinutes())
         setStartTime(selectedTime)
     }
     
     function handleSubmit(e) {
         e.preventDefault();
         console.log('new activity submitted')
+        let minutes = startTime.getMinutes()
+        if (startTime.getMinutes() === 0) {
+            minutes = '00'
+        }
+        console.log(minutes)
 
-        const newActivity = { 
+        const editedActivity = { 
             name: name,
             address: address,
             date: date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(),
-            start_time: startTime.getHours()+':'+startTime.getMinutes(),
+            start_time: startTime.getHours()+':'+minutes,
             end_time: endTime,
             cost: parseInt(cost),
             notes: notes,
             category_id: categoryID(category),
-            trip_id: trip.id,
         }
     
-        console.log(newActivity)
+        console.log(editedActivity)
 
-        fetch('/activities', {
-          method: 'POST',
+        fetch(`/activities/${activity.id}`, {
+          method: 'PATCH',
           headers: {
             'content-type': 'application/json'
           },
-          body: JSON.stringify(newActivity)
+          body: JSON.stringify(editedActivity)
         })
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
-            // onAddActivity(data);
-            navigate(`/trip/${trip.id}`, { state: trip.id })
+            navigate(`/trip/${selectedTrip.id}`, { state: selectedTrip.id })
           })
     }
 
@@ -120,7 +129,7 @@ function NewActivityForm() {
                         onChange={handleDateSelection} 
                         closeOnScroll={true}
                         includeDateIntervals={[
-                            { start: new Date(trip.start_date+'T00:00:00'), end: new Date(trip.end_date+'T00:00:00') },
+                            { start: new Date(selectedTrip.start_date+'T00:00:00'), end: new Date(selectedTrip.end_date+'T00:00:00') },
                           ]}
                     />
                     <label className="actLabel"
@@ -176,14 +185,15 @@ function NewActivityForm() {
 
                     <label className="actLabel activityNotes"
                     htmlFor="notes">Notes</label>
-                    <input
+                    <textarea
                         className="actInput"
                         type="text"
                         id="notes"
                         value={notes}
                         onChange={(e) => setNotes(e.target.value)}
+                        rows={6}
                     />
-                    <button className="actButton" type="submit">{isLoading ? "Loading..." : "Save New Activity"}</button>
+                    <button className="actButton" type="submit">{isLoading ? "Loading..." : "Save Activity"}</button>
                 </div>
         </form>
         </div>
@@ -191,4 +201,4 @@ function NewActivityForm() {
     )
 }
 
-    export default NewActivityForm
+    export default EditActivityForm

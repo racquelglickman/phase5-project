@@ -13,6 +13,7 @@ function ItineraryList({ trip }) {
     const navigate = useNavigate()
 
     const { setSelectedTrip } = useContext(MyContext)
+    const location = useLocation()
     
     useEffect(() => {
         setSelectedTrip(trip)

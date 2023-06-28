@@ -7,17 +7,30 @@ import { useLocation } from 'react-router-dom';
 
 function Home() {
 
-    const { selectedTrip } = useContext(MyContext)
+    const { selectedTrip, setSelectedTrip } = useContext(MyContext)
 
     const location = useLocation()
+    console.log(location.state)
     const [tripID, setTripID] = useState(location.state)
     const [trip, setTrip] = useState()
+    // check what location.state is and then set things appropriately
+    if (typeof(location.state) === 'number') {
+        console.log('this is the trip id')
+        // setTripID(location.state)
+    } else {
+        console.log('this is the selectedTrip object')
+    }
+    
 
     useEffect(() => {
-        fetch(`/trips/${selectedTrip? selectedTrip.id : tripID}`)
+
+        console.log('selected', selectedTrip)
+        console.log('tripID', tripID)
+        fetch(`/trips/${tripID}`)
             .then((res) => res.json())
             .then((data) => {
                 setTrip(data)
+                setSelectedTrip(data)
             })
     }, [])
 

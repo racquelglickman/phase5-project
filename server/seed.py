@@ -75,7 +75,7 @@ def make_trips():
 
 def make_categories():
     categories =[]
-    for cat in ['flight', 'hotel', 'train', 'car', 'bus', 'tour', 'hike', 'water', 'explore', 'logistics']:
+    for cat in ['flight', 'hotel', 'train', 'car', 'bus', 'tour', 'hike', 'water', 'explore', 'logistics', 'dining']:
         category = Category(
             name = cat,
         )

@@ -20,6 +20,7 @@ function Nav() {
 
     function handleNavigate() {
       navigate('/')
+      setSelectedTrip()
     }
 
     function handleSelectedUser() {
@@ -39,8 +40,8 @@ function Nav() {
                   </div>
                   {selectedTrip?
                   <div className='navBarProper'>
-                    <Link className='link' to={selectedTrip? `/trip/${selectedTrip.id}` : null}>Itinerary</Link>
-                    <Link className='link' to={selectedTrip? `/trip/notebook/${selectedTrip.id}` : null}>Notebook</Link>
+                    <Link className='link' to={selectedTrip? `/trip/${selectedTrip.id}` : null} state={{selectedTrip: selectedTrip}}>Itinerary</Link>
+                    <Link className='link' to={selectedTrip? `/trip/notebook/${selectedTrip.id}` : null} state={{selectedTrip: selectedTrip}}>Notebook</Link>
                   </div>
                   : null}
                 </div>

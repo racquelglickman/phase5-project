@@ -1,14 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import './form.css'
+import { MyContext } from './MyProvider'
 
 function Notebook() {
 
     const [notebook, setNotebook] = useState('')
+
+    const { selectedTrip } = useContext(MyContext)
+
     function handleSubmit(e) {
       e.preventDefault();
       console.log('need to patch to backend')
     }
 
+    console.log(selectedTrip)
 
     return (
         <div className='notebookContainer'>

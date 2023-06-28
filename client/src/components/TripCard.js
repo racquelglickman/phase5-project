@@ -13,6 +13,7 @@ function TripCard({ trip }) {
         setSelectedTrip(trip)
         navigate(`/trip/${trip.id}`, {state: trip.id})
     }
+
     
     return (
         <div className='tripCard' onClick={handleClick}>
