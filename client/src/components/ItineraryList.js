@@ -16,7 +16,7 @@ function ItineraryList({ trip }) {
     
     useEffect(() => {
         setSelectedTrip(trip)
-    }, [])
+    }, [trip])
 
     function onDeleteActivity(deletedID) {
         setActivities(activities.filter((act) => {

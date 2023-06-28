@@ -4,7 +4,6 @@ import ItineraryList from './ItineraryList';
 import { MyContext } from './MyProvider'
 import './homePage.css';
 import { useLocation } from 'react-router-dom';
-import Nav from './Nav';
 
 function Home() {
 
