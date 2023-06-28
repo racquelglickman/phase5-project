@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 
   function ActivityCard({ activity, onDeleteActivity }) {
+
+    const [editing, setEditing] = useState(false)
+    const [editNotesValue, setEditNotesValue] = useState(activity.notes);
 
     function handleDelete() {
         console.log('deleting activity')
@@ -27,10 +30,9 @@ import React from 'react'
         }
     }
 
-    timeFormat(activity.start_time)
-
     function handleEdit() {
         console.log('editing', activity)
+        setEditing(true)
     }
 
     return (
@@ -44,7 +46,7 @@ import React from 'react'
                 </div>
                 <div className='activityDetails'>
                         <h4>{activity.name}</h4>
-                        <p>{activity.notes}</p>
+                        <p>{activity.notes}</p> 
                         {/* <p>▿</p> */}
                 </div>
             </div>
