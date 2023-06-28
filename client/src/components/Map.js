@@ -36,28 +36,29 @@ function Map({ trip }) {
 
     const geocodeFunction = async (activity) => {
       const response = await Geocode.fromAddress(activity.address)
-      console.log(response)
+      // console.log(response)
       const { lat, lng } = response.results[0].geometry.location;
-      console.log(lat, lng)
-      setCoordinates(coordinates => [...coordinates, {name: activity.name, lat:lat, lng:lng}])
+      // console.log(lat, lng)
+      const address = response.results[0].formatted_address;
+      setCoordinates(coordinates => [...coordinates, {name:activity.name, address:address, lat:lat, lng:lng}])
   }
 
     const geocodeActivities = async () => {
       for (let i = 0; i < trip.activities.length; i++) {
-        console.log(trip.activities[i].address)
+        // console.log(trip.activities[i].address)
         await geocodeFunction(trip.activities[i])
-        console.log('promise is resolved')
+        // console.log('promise is resolved')
       }
-      console.log('ALL activities were geocoded')
+      // console.log('ALL activities were geocoded')
     }
 
     geocodeActivities();
 
   };
 
-  const handleMarkerClick = (id, lat, lng, name) => {
+  const handleMarkerClick = (lat, lng, name, address) => {
     mapRef?.panTo({ lat, lng });
-    setInfoWindowData({ id, name });
+    setInfoWindowData({ name, address });
     setIsOpen(true);
   };
 
@@ -69,19 +70,22 @@ function Map({ trip }) {
   // console.log(coordinates)
   const activityMarkers = coordinates.map((coord) => {
     return <Marker 
-              key={uuid()} 
+              key={coord['name']} 
               position={coord} 
-              // onClick={() => handleMarkerClick(id, coord['lat'], coord['lng'])}
+              onClick={() => handleMarkerClick(coord['lat'], coord['lng'], coord['name'], coord['address'])}
             >
-              {/* {isOpen && infoWindowData?.id === ind && (
+              {isOpen && infoWindowData?.name === coord['name'] && (
                   <InfoWindow
                     onCloseClick={() => {
                       setIsOpen(false);
                     }}
                   >
-                    <h3>{infoWindowData.name}</h3>
+                    <div>
+                      <h3>{infoWindowData.name}</h3>
+                      <p>{infoWindowData.address}</p>
+                    </div>
                   </InfoWindow>
-              )} */}
+              )}
           </Marker>
     
   })
@@ -99,6 +103,7 @@ function Map({ trip }) {
                   center={center}
                   zoom={6}
                   onLoad={onMapLoad}
+                  onClick={() => setIsOpen(false)}
               >
                 {/* <Marker position={center} /> */}
                 {activityMarkers}
