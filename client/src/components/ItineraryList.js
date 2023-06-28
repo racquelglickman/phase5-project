@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import './homePage.css';
 import DayContainer from './DayContainer'
+import { MyContext } from './MyProvider'
 
 function ItineraryList({ trip }) {
 
@@ -10,6 +11,12 @@ function ItineraryList({ trip }) {
     const [end, setEnd] = useState(trip['end_date']+'T00:00:00')
 
     const navigate = useNavigate()
+
+    const { setSelectedTrip } = useContext(MyContext)
+    
+    useEffect(() => {
+        setSelectedTrip(trip)
+    }, [])
 
     function onDeleteActivity(deletedID) {
         setActivities(activities.filter((act) => {
