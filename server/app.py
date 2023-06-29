@@ -83,6 +83,20 @@ class TripById(Resource):
         else:
             return {'error': '404: Trip not found'}, 404
         
+    def patch(self, id):
+        trip = Trip.query.filter_by(id=id).first()
+        for attr in request.json:
+            setattr(trip, attr, request.json[attr])
+
+        db.session.add(trip)
+        db.session.commit()
+
+        response = make_response(
+            trip.to_dict(), 202
+        )
+
+        return response
+        
 api.add_resource(TripById, '/trips/<int:id>')
 
 class Activities(Resource):
