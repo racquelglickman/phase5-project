@@ -52,6 +52,7 @@ function NewActivityForm() {
     function handleTimeSelection(selectedTime) {
         console.log(selectedTime)
         setStartTime(selectedTime)
+        // deal with if the minutes are only one digit - add a zero before, not after
     }
     
     function handleSubmit(e) {

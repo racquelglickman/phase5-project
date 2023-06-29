@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import './homePage.css'
 
   function ActivityCard({ activity, onDeleteActivity }) {
 
     const [editNotesValue, setEditNotesValue] = useState(activity.notes);
+    const [isEditing, setIsEditing] = useState(false)
 
     const navigate = useNavigate()
 
@@ -42,7 +44,27 @@ import { useNavigate } from 'react-router-dom';
 
     function handleEdit() {
         console.log('editing', activity)
+        setIsEditing(true)
         // navigate(`/editactivity`, { state: activity })
+    }
+
+    function handleSubmitEditNotes(e) {
+        e.preventDefault();
+        console.log('submit notes')
+
+        fetch(`/activities/${activity.id}`, {
+            method: 'PATCH',
+            headers: {
+              'content-type': 'application/json'
+            },
+            body: JSON.stringify({notes: editNotesValue})
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              setIsEditing(false)
+            //   navigate(`/trip/${selectedTrip.id}`, { state: selectedTrip.id })
+            })
     }
 
     const bulletedNotes = activity.notes.split('\n')
@@ -61,7 +83,22 @@ import { useNavigate } from 'react-router-dom';
                 </div> */}
                 <div className='activityDetails'>
                         <h4>{activity.name}</h4>
-                        {bulletedNotesElements} 
+                        {isEditing? 
+                        <div >
+                            <form className='editNotes' onSubmit={handleSubmitEditNotes}>
+                                <textarea
+                                    value={editNotesValue}
+                                    rows={6}
+                                    onChange={(e) => setEditNotesValue(e.target.value)}
+                                > 
+                                </textarea>
+                                <button
+                                    className='actButton'
+                                    type='submit'
+                                >Save</button>
+                            </form>
+                        </div>
+                        :bulletedNotesElements} 
                 </div>
             </div>
             <div className='activityCardButtons'>
