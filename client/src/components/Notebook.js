@@ -11,6 +11,7 @@ function Notebook() {
 
     const { setSelectedTrip } = useContext(MyContext)
     const [trip, setTrip] = useState(null)
+    const [name, setName] = useState(null)
 
     useEffect(() => {
       console.log(location.state)
@@ -22,6 +23,7 @@ function Notebook() {
           console.log(data)
           setTrip(data)
           setNotebook(data.notebook)
+          setName(data.name)
         })
 
     }, [])
@@ -43,9 +45,11 @@ function Notebook() {
         })
     }
 
+
     return (
         <div className='notebookContainer'>
             <form className='notebookForm' onSubmit={handleSubmit}>
+              <h1>{name}</h1>
               <label>
                 Trip Notebook:
               </label>

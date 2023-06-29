@@ -63,7 +63,7 @@ import './homePage.css'
             .then((data) => {
               console.log(data);
               setIsEditing(false)
-            //   navigate(`/trip/${selectedTrip.id}`, { state: selectedTrip.id })
+              // need to re-render activity info to reflect backend change
             })
     }
 
