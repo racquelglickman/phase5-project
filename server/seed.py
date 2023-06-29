@@ -59,6 +59,7 @@ def make_trips():
         start_date = date(2022,3,17),
         end_date = date(2022,3,24),
         user_id=11,
+        notebook = 'testing portugal'
     )
     trips.append(portugal_trip)
 
@@ -68,6 +69,7 @@ def make_trips():
         start_date = date(2023,8,6),
         end_date = date(2023,8,15),
         user_id=11,
+        notebook = 'testing',
     )
     trips.append(panama_trip)
 
