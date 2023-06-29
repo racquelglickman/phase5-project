@@ -25,14 +25,17 @@ import { useNavigate } from 'react-router-dom';
             time = time + '0'
         }
 
-        if (parseInt(time.substring(0,2)) <= 12) {
+        if (parseInt(time.substring(0,2)) < 12) {
             if (time.charAt(0) === '0') {
                 return time.substring(1,5)+' am'
             }
             else {
                 return time.substring(0,5)+' am'
             }
-        } else {
+        } else if (parseInt(time.substring(0,2)) === 12) {
+            return time.substring(0,5)+' pm'
+        }
+        else {
             return parseInt(time.substring(0,2))-12+':'+time.substring(3,5)+' pm'
         }
     }
