@@ -71,8 +71,6 @@ function EditActivityForm() {
             name: name,
             address: address,
             date: date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate(),
-            start_time: startTime.getHours()+':'+minutes,
-            end_time: endTime,
             cost: parseInt(cost),
             notes: notes,
             category_id: categoryID(category),
@@ -146,13 +144,6 @@ function EditActivityForm() {
                         timeCaption="Time"
                         dateFormat="h:mm aa"
                     />
-                    {/* <input
-                        className="actInput"
-                        type="text"
-                        id="start_time"
-                        value={startTime}
-                        onChange={(e) => setStartTime(e.target.value)}
-                    /> */}
                     <label className="actLabel"
                     htmlFor="end_time">End Time</label>
                     <input

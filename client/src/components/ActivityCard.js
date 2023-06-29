@@ -20,6 +20,11 @@ import { useNavigate } from 'react-router-dom';
     }
 
     function timeFormat(time) {
+
+        if ((time.length === 4 && time.charAt(2) === ':') || (time.length === 3 && time.charAt(1) === ':')) {
+            time = time + '0'
+        }
+
         if (parseInt(time.substring(0,2)) <= 12) {
             if (time.charAt(0) === '0') {
                 return time.substring(1,5)+' am'
@@ -28,7 +33,7 @@ import { useNavigate } from 'react-router-dom';
                 return time.substring(0,5)+' am'
             }
         } else {
-            return parseInt(time.substring(0,2))-12+':00 pm'
+            return parseInt(time.substring(0,2))-12+':'+time.substring(3,5)+' pm'
         }
     }
 
@@ -36,6 +41,11 @@ import { useNavigate } from 'react-router-dom';
         console.log('editing', activity)
         navigate(`/editactivity`, { state: activity })
     }
+
+    const bulletedNotes = activity.notes.split('\n')
+    const bulletedNotesElements = bulletedNotes.filter(bullet => bullet.length > 0).map((bullet) => {
+        return <p key={bullet}>  • {bullet}</p>
+    })
 
     return (
         <div className='activityCard'>
@@ -48,8 +58,7 @@ import { useNavigate } from 'react-router-dom';
                 </div> */}
                 <div className='activityDetails'>
                         <h4>{activity.name}</h4>
-                        <p>{activity.notes}</p> 
-                        {/* <p>▿</p> */}
+                        {bulletedNotesElements} 
                 </div>
             </div>
             <div className='activityCardButtons'>

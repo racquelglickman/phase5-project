@@ -45,10 +45,12 @@ function NewActivityForm() {
     })
 
     function handleDateSelection(selectedDate) {
+        console.log(selectedDate)
         setDate(selectedDate)
     }
 
     function handleTimeSelection(selectedTime) {
+        console.log(selectedTime)
         setStartTime(selectedTime)
     }
     
@@ -176,12 +178,13 @@ function NewActivityForm() {
 
                     <label className="actLabel activityNotes"
                     htmlFor="notes">Notes</label>
-                    <input
+                    <textarea
                         className="actInput"
                         type="text"
                         id="notes"
                         value={notes}
                         onChange={(e) => setNotes(e.target.value)}
+                        rows={6}
                     />
                     <button className="actButton" type="submit">{isLoading ? "Loading..." : "Save New Activity"}</button>
                 </div>
