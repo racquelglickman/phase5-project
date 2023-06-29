@@ -42,7 +42,7 @@ import { useNavigate } from 'react-router-dom';
 
     function handleEdit() {
         console.log('editing', activity)
-        navigate(`/editactivity`, { state: activity })
+        // navigate(`/editactivity`, { state: activity })
     }
 
     const bulletedNotes = activity.notes.split('\n')
